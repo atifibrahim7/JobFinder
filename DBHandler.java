@@ -67,6 +67,30 @@ class DBHandler {
         }
     }
 
+    public ArrayList<ArrayList<String>> getAllCompanies() {
+        ArrayList<ArrayList<String>> companies = new ArrayList<>();
+        
+        String query = "SELECT * FROM company";        
+          try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                ArrayList<String> companyInfo = new ArrayList<>();
+                companyInfo.add(rs.getString("name"));
+                companyInfo.add(rs.getString("address"));
+                companyInfo.add(rs.getString("email"));
+                
+                companies.add(companyInfo);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving companies: " + e.getMessage());
+        }
+        
+        return companies;
+    }
    
     // Retrieve all JobHunters
     public List<String> getAllJobHunters() {

@@ -28,6 +28,8 @@ public class AccountController {
     @FXML
     private Button profileBtn;
 
+    @FXML
+    private Button pendingApplicationsBtn;  // New Button
 
     @FXML
     private Button logoutBtn;
@@ -63,6 +65,7 @@ public class AccountController {
         jobVacanciesBtn.setOnAction(e -> handleJobVacancies());
         profileBtn.setOnAction(e -> handleProfile());
         viewCompaniesBtn.setOnAction(e -> handleViewCompanies());
+        pendingApplicationsBtn.setOnAction(e -> handlePendingApplications());  // Handler for Pending Applications
         logoutBtn.setOnAction(e -> handleLogout());
     }
 
@@ -116,7 +119,6 @@ public class AccountController {
         }
     }
 
-
     private void handleProfile() {
         System.out.println("Profile clicked");
     }
@@ -132,13 +134,27 @@ public class AccountController {
         }
     }
     
+    // Dummy handler for "Pending Applications"
+    private void handlePendingApplications() {
+        System.out.println("Pending Applications clicked");
+        // Implement functionality here
+    }
 
+    // Handler for Job Vacancies
     private void handleJobVacancies() {
         System.out.println("Job Vacancies clicked");
+        // Implement functionality here
     }
 
+    // Handler for View Companies
     private void handleViewCompanies() {
-        System.out.println("View Companies clicked");
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
- 
 }
