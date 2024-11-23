@@ -1,12 +1,17 @@
 package application;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,14 +19,15 @@ import java.sql.ResultSet;
 
 public class AccountController {
 
-    @FXML
-    private Button dashboardBtn;
+	@FXML
+	private Button jobVacanciesBtn;
+
+	@FXML
+	private Button viewCompaniesBtn;
 
     @FXML
     private Button profileBtn;
 
-    @FXML
-    private Button settingsBtn;
 
     @FXML
     private Button logoutBtn;
@@ -54,9 +60,9 @@ public class AccountController {
     }
 
     private void setupButtonHandlers() {
-        dashboardBtn.setOnAction(e -> handleDashboard());
+        jobVacanciesBtn.setOnAction(e -> handleJobVacancies());
         profileBtn.setOnAction(e -> handleProfile());
-        settingsBtn.setOnAction(e -> handleSettings());
+        viewCompaniesBtn.setOnAction(e -> handleViewCompanies());
         logoutBtn.setOnAction(e -> handleLogout());
     }
 
@@ -111,34 +117,28 @@ public class AccountController {
     }
 
 
-    private void handleDashboard() {
-        System.out.println("Dashboard clicked");
-    }
-
     private void handleProfile() {
         System.out.println("Profile clicked");
     }
 
-    private void handleSettings() {
-        System.out.println("Settings clicked");
-    }
-
     private void handleLogout() {
-        System.out.println("Logout clicked");
-    }
-
-    @FXML
-    private void handleAttachResume() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Resume");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
-            new FileChooser.ExtensionFilter("Word Documents", "*.doc", "*.docx")
-        );
-
-        File selectedFile = fileChooser.showOpenDialog(attachResumeBtn.getScene().getWindow());
-        if (selectedFile != null) {
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) logoutBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+    
+
+    private void handleJobVacancies() {
+        System.out.println("Job Vacancies clicked");
+    }
+
+    private void handleViewCompanies() {
+        System.out.println("View Companies clicked");
+    }
+ 
 }

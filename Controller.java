@@ -18,7 +18,6 @@ import java.util.Map;
 import javafx.scene.Scene;
 import javafx.stage.*;
 
-
 class Resume{
     protected String education;
     protected String past_experience;
@@ -113,8 +112,11 @@ class job_vacancy
 
 public class Controller {
 	
+	
+	
 	@FXML
     private TextField usernameField; // For username input
+
     @FXML
     private PasswordField passwordField; // For password input
 
@@ -125,6 +127,7 @@ public class Controller {
     static String curr_type;
     public void controller_start() {
     	db.test();
+        System.out.println("Hello world!");
     }
     @FXML
     public void login() {
@@ -138,7 +141,18 @@ public class Controller {
                 curr_type = user.get("type");
                 System.out.println("Login successful! Welcome, " + curr_user + " [" + curr_type + "]");
                 UserSession.currentUsername = curr_user;
-                UserSession.currentRole = curr_type;
+                UserSession.currentRole = curr_type ; 
+                System.out.println(  UserSession.currentRole );
+                if("JobHunter".equals(UserSession.currentRole)) {
+                	goToAccount();
+                	
+                }
+                else {
+                	//System.out.println("Else login ");
+                //	goToAccount();
+                }
+                
+                
             } else {
                 System.out.println("Invalid username or password.");
             }
@@ -148,7 +162,7 @@ public class Controller {
     }
 
     @FXML
-    private TextField jhnameField, jhusernameField, jhemailField;
+    private TextField jhnameField, jhusernameField, jhemailField , companyField;
 
     @FXML
     private PasswordField jhpasswordField;
@@ -170,11 +184,23 @@ public class Controller {
         curr_user = username;
         curr_type = "JobHunter";
         System.out.println("Registration successful! Welcome, " + curr_user);
-        
+        UserSession.currentRole = curr_type ; 
+        UserSession.currentUsername = curr_user ;
         // After successful registration, redirect to login or home page
-        goToLogin();
+        goToResumeBuilder();
     }
-
+    @FXML
+    public void goToResumeBuilder() {
+    	  try {
+              FXMLLoader loader = new FXMLLoader(getClass().getResource("ResumeBuilder.fxml"));
+              Scene ResumeScene = new Scene(loader.load());
+              Stage stage = (Stage) jhusernameField.getScene().getWindow();
+              stage.setScene(ResumeScene);
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+    }
+    
     @FXML
     public void goToLogin() {
         try {
@@ -186,7 +212,22 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    
+    @FXML
+    public void goToAccount() {
+    	try {
+    		System.out.println("Controller.goToAccount()");
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("account1.fxml"));
+             Scene accountScene = new Scene(loader.load());
+             Stage stage = (Stage) usernameField.getScene().getWindow();
+             stage.setScene(accountScene);
+    		
+    	} catch (IOException e ) {
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	
+    }
     @FXML
     public void goToRegister() {
         try {
@@ -198,27 +239,30 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    public void register_employer()
-    {
-        String username ="hello";
-        String password="hello";
-        String email="hello";
-        String name="hello";
-        String company_name = "eee";
-        if(db.isProfile(username))
-        {
-            //profile already exists login?
-        	return;
+    public void register_employer() {
+        String username = jhusernameField.getText().trim();
+        String password = jhpasswordField.getText().trim();
+        String email = jhemailField.getText().trim();
+        String name = jhnameField.getText().trim();
+        String company_name = companyField.getText().trim();
+
+        if (db.isProfile(username)) {
+            System.out.println("Profile already exists. Please log in.");
+            return;
         }
-        if(db.isCompany(company_name))
-        {
-        	//company doesnt exist
-        	return;
+
+        if (db.isCompany(company_name)) {
+            System.out.println("Company does not exist. Please register the company first.");
+            return;
         }
-        db.addProfile(username,name,email,password,"Employer");
+
+        db.addProfile(username, name, email, password, "Employer");
         db.add_employer(name, username, password, email, company_name);
+
         curr_user = username;
-        curr_type = "JobHunter";
+        curr_type = "Employer";  
+
+        System.out.println("Registration successful. Welcome, " + name + "!");
     }
     public void register_recruiter()
     {

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<HBox  fx:controller="application.Controller" prefWidth="800" prefHeight="500" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #F7F7F7; -fx-border-radius: 15; -fx-background-radius: 15;">
+<HBox  fx:controller="application.Controller" prefWidth="800" prefHeight="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #F7F7F7; -fx-border-radius: 15; -fx-background-radius: 15;">
   <!-- Login Section -->
     <VBox alignment="CENTER" spacing="20" prefWidth="500" style="-fx-padding: 40; -fx-background-color: white;">
         <children>
