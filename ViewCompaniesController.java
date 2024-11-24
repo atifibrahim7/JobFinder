@@ -105,6 +105,10 @@ public class ViewCompaniesController {
         if("Employer".equals(UserSession.currentRole)) {
         	path = "employerDashboard.fxml";
         }
+        if("Recruiter".equals(UserSession.currentRole))
+        {
+        	path = "recruiteraccount.fxml";
+        }
     	try {
         	
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));

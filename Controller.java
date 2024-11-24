@@ -121,6 +121,8 @@ public class Controller {
 	public static Recruiter Current_R; 
 	public static employer Current_E;
 	
+	
+	//login
 	@FXML
     private TextField usernameField; // For username input
     @FXML
@@ -153,11 +155,11 @@ public class Controller {
                 else if("Employer".equals(UserSession.currentRole)){
                 	Current_E = new employer(name,curr_user,email,password);
                 	goToEmployerDashboard();
-                //	goToAccount();
                 }
                 else if("Recruiter".equals(UserSession.currentRole)){
-                	//System.out.println("Else login ");
-                //	goToAccount();
+                	Current_R = new Recruiter(name,curr_user,email,password);
+                	System.out.println("Recruiter created!!");
+                	goToRecruiterAccount();
                 }
   
             } else {
@@ -168,7 +170,7 @@ public class Controller {
         }
     }
 
-    
+    //registration 
     @FXML
     private TextField jhnameField, jhusernameField, jhemailField , companyField;
 
@@ -210,6 +212,20 @@ public class Controller {
     	} catch (IOException e ) {
     		e.printStackTrace();
     	} 	
+    }
+    
+    @FXML
+    public void goToRecruiterAccount()
+    {
+    	System.out.println("Loading Recruiter Account");
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("recruiteraccount.fxml"));
+            Scene RecruiterAccountScene = new Scene(loader.load());
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(RecruiterAccountScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML
@@ -287,10 +303,10 @@ public class Controller {
     }
     public void register_recruiter()
     {
-        String username =jhusernameField.getText();
-        String password=jhusernameField.getText();
-        String email=jhusernameField.getText();
-        String name=jhusernameField.getText();
+        String username =jhusernameField.getText().trim();;
+        String password=jhpasswordField.getText().trim();;
+        String email=jhemailField.getText().trim();;
+        String name=jhnameField.getText().trim();;
         if(db.isProfile(username))
         {
             //profile already exists login?
@@ -300,6 +316,8 @@ public class Controller {
         db.add_recruiter(name, username, password, email);
         curr_user = username;
         curr_type = "Recruiter";
+        System.out.println("Registration successful. Welcome, " + name + "!");
+        goToLogin();
     }
 
 }

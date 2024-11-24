@@ -1,6 +1,6 @@
 package application;
 
 public class UserSession {
-    public static String currentUsername = "";
-    public static String currentRole = "";
+    public static String currentUsername = "ff";
+    public static String currentRole = "Recruiter";
 }
