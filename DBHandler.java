@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "abbasi123";
+    private static final String DB_PASSWORD = "12345678";
 
     private Connection conn;
 
@@ -70,8 +70,31 @@ class DBHandler {
             System.err.println("failed to update application");
             e.printStackTrace(); // Print the stack trace for debugging
         }
-   
     }
+    
+    public ArrayList<ArrayList<String>> getJHApplications(String JHusername)
+    {
+    	String query = "select company,requirements,jobvacancy.vacancy_title,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title where application.applicant_username = ?";
+        ArrayList<ArrayList<String>> applications = new ArrayList<>();
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, JHusername);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+            	ArrayList<String> application1 = new ArrayList<>();
+	 	        application1.add(rs.getString("company"));
+	 	        application1.add(rs.getString("requirements"));
+	 	        application1.add(rs.getString("vacancy_title"));
+	 	        application1.add(rs.getString("status"));
+	 	        applications.add(application1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving companies: " + e.getMessage());
+        }
+        return applications;
+
+    }
+    
     public ArrayList<ArrayList<String>> getApplications(String username)
     {
     	String query = "select company,requirements,jobvacancy.vacancy_title,applicant_username,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title "

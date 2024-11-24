@@ -136,8 +136,14 @@ public class AccountController {
     
     // Dummy handler for "Pending Applications"
     private void handlePendingApplications() {
-        System.out.println("Pending Applications clicked");
-        // Implement functionality here
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("JobhunterApplications.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Handler for Job Vacancies

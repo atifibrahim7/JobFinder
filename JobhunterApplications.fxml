@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<HBox xmlns="http://javafx.com/javafx/19"
+     xmlns:fx="http://javafx.com/fxml/1" 
+     fx:controller="application.JobhunterApplicationsController"
+     prefHeight="600.0" prefWidth="800.0">
+          
+   <!-- Left Menu -->
+   <VBox spacing="0" style="-fx-background-color: #f0f0f0;" prefWidth="200">
+       <padding>
+           <Insets top="20" right="20" bottom="20" left="20"/>
+       </padding>
+       <Region VBox.vgrow="ALWAYS"/>
+      
+       <Button fx:id="profileBtn" text="Profile" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #ffffff;"/>
+      
+       <Region VBox.vgrow="ALWAYS"/>
+      
+       <Button fx:id="pendingApplicationsBtn" text="Pending&#10;Applications" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #ffffff;"/>
+      
+       <Region VBox.vgrow="ALWAYS"/>
+       <Button fx:id="jobVacanciesBtn" text="Job Vacancies" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #ffffff;"/>
+      
+       <Region VBox.vgrow="ALWAYS"/>
+       <Button fx:id="viewCompaniesBtn" text="View&#10;Companies" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #ffffff;"/>
+      
+       <Region VBox.vgrow="ALWAYS"/>
+      
+       <Button fx:id="logoutBtn" text="Logout" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold;"/>
+      
+       <Region VBox.vgrow="ALWAYS"/>
+   </VBox>
+  
+   <!-- Main Content (Right Pane) -->
+   <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 20px;">
+       <Label text="Jonhunter Applications" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+      
+       <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+           <VBox fx:id="applicationsContainer" spacing="10">
+               <!-- Applications will be added here dynamically -->
+           </VBox>
+       </ScrollPane>
+   </VBox>
+</HBox>
