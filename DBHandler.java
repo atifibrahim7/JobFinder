@@ -57,7 +57,47 @@ class DBHandler {
     }
     
     
-    
+    public void update_application(String new_status,String vacancy_title, String username)
+    {
+    	String query = "UPDATE application SET status = ? WHERE vacancy_title = ? AND applicant_username = ?";
+    	try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, new_status);
+            pstmt.setString(2, vacancy_title);
+            pstmt.setString(3, username);
+            pstmt.executeUpdate();
+            System.out.println("Application Status Updated");
+        } catch (SQLException e) {
+            System.err.println("failed to update application");
+            e.printStackTrace(); // Print the stack trace for debugging
+        }
+   
+    }
+    public ArrayList<ArrayList<String>> getApplications(String username)
+    {
+    	String query = "select company,requirements,jobvacancy.vacancy_title,applicant_username,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title "
+    			+ "where jobvacancy.recruiter_username = ?";
+        ArrayList<ArrayList<String>> applications = new ArrayList<>();
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+            	String temp = rs.getString("status");
+            	if("pending".equals(temp)) {
+ 	                ArrayList<String> application1 = new ArrayList<>();
+ 	                application1.add(rs.getString("company"));
+ 	                application1.add(rs.getString("requirements"));
+ 	                application1.add(rs.getString("vacancy_title"));
+ 	                application1.add(rs.getString("applicant_username"));
+ 	                applications.add(application1);
+            	}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving companies: " + e.getMessage());
+        }
+        return applications;
+    }
+
     public void addApplication(String username, String vacancyTitle, Date applicationDate) {
         String query = "INSERT INTO application (applicant_username,date_applied ,  vacancy_title , status ) " +
                       "VALUES (?, ?, ?, ?)";
