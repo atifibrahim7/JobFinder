@@ -139,7 +139,7 @@ class DBHandler {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
-            return rs.next(); // Returns true if username exists, false if it doesn't
+            return rs.next(); // Returns true if company exists, false if it doesn't
         } catch (SQLException e) {
             System.err.println("Error: Unable to check company" + name);
             return false; // Return false in case of database errors

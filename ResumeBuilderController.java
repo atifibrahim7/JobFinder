@@ -35,6 +35,8 @@ public class ResumeBuilderController {
         String skills = skillsField.getText();
         
         // Call backend to save data (example)
+        Resume r = new Resume(education,experience,skills);
+        Controller.Current_JH.attach_resume(r);
         Controller.db.addResume(UserSession.currentUsername, education, experience, skills);
 
         // After saving, redirect to the profile page

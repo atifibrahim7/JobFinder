@@ -187,6 +187,7 @@ public class Controller {
             return;
         }
 
+    	Current_JH = new job_hunter(name,username,email,password);
         db.addProfile(username, name, email, password, "JobHunter");
         db.add_jobhunter(name, username, password, email);
         curr_user = username;
@@ -270,7 +271,7 @@ public class Controller {
             return;
         }
 
-        if (db.isCompany(company_name)) {
+        if (!db.isCompany(company_name)) {
             System.out.println("Company does not exist. Please register the company first.");
             return;
         }
