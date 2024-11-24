@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
@@ -13,6 +15,8 @@ import javafx.scene.layout.HBox;
 
 public class EmployerDashboardController {
 
+	@FXML
+	private Button viewCompaniesBtn;
     @FXML
     private Button dashboardBtn;
     @FXML
@@ -67,29 +71,29 @@ public class EmployerDashboardController {
     }
 
     private void setupButtonHandlers() {
-        dashboardBtn.setOnAction(e -> handleDashboard());
         profileBtn.setOnAction(e -> handleProfile());
-        settingsBtn.setOnAction(e -> handleSettings());
         logoutBtn.setOnAction(e -> handleLogout());
         addVacancyBtn.setOnAction(e -> handleAddVacancy());
         manageVacanciesBtn.setOnAction(e -> handleManageVacancies());
+        viewCompaniesBtn.setOnAction(e -> handleViewCompanies());
+
     }
 
-    private void handleDashboard() {
-        System.out.println("Dashboard clicked");
+    private void handleLogout() {
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) logoutBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleProfile() {
         System.out.println("Profile clicked");
     }
 
-    private void handleSettings() {
-        System.out.println("Settings clicked");
-    }
-
-    private void handleLogout() {
-        System.out.println("Logout clicked");
-    }
 
     private void handleAddVacancy() {
         try {
@@ -113,6 +117,16 @@ public class EmployerDashboardController {
             stage.setTitle("Manage Vacancies");
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleViewCompanies() {
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

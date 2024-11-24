@@ -101,8 +101,13 @@ public class ViewCompaniesController {
 
     // Handle profile button click, navigate to the profile page
     private void handleProfile() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("account1.fxml"));
+        String path = "account1.fxml";
+        if("Employer".equals(UserSession.currentRole)) {
+        	path = "employerDashboard.fxml";
+        }
+    	try {
+        	
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Scene profileScene = new Scene(loader.load());
             Stage stage = (Stage) profileBtn.getScene().getWindow();
             stage.setScene(profileScene);

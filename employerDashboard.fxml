@@ -6,31 +6,51 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
+
 
 <HBox style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" 
       fx:controller="application.EmployerDashboardController"
       prefHeight="800.0" prefWidth="800.0">
+      
+      
+     <!-- left menu -->
+    <VBox spacing="0" style="-fx-background-color: #f0f0f0;" prefWidth="200">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
 
-    <!-- Left Sidebar -->
-    <VBox prefWidth="200" spacing="10" style="-fx-background-color: white; -fx-padding: 20;">
-        <Button fx:id="dashboardBtn" prefWidth="160" style="-fx-background-color: white; -fx-text-fill: black;" text="Dashboard">
-         <font>
-            <Font size="17.0" />
-         </font></Button>
-        <Button fx:id="profileBtn" prefWidth="160" style="-fx-background-color: white; -fx-text-fill: black;" text="Profile">
-         <font>
-            <Font size="17.0" />
-         </font></Button>
-        <Button fx:id="settingsBtn" prefWidth="160" style="-fx-background-color: white; -fx-text-fill: black;" text="Settings">
-         <font>
-            <Font size="17.0" />
-         </font></Button>
-        <Button fx:id="logoutBtn" prefWidth="160" style="-fx-background-color: white; -fx-text-fill: black;" text="Logout">
-         <font>
-            <Font size="17.0" />
-         </font></Button>
+        <!-- Spacer at the top -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- Profile Button (Moved to the top) -->
+        <Button fx:id="profileBtn" text="Profile" prefWidth="160" prefHeight="50"
+                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+        <Button fx:id="manageVacanciesBtn" prefWidth="160" prefHeight="50"
+                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Manage Vacancies" />
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- View Companies Button -->
+        <Button fx:id="viewCompaniesBtn" text="View\nCompanies" prefWidth="160" prefHeight="50"
+                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+        
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- Logout Button -->
+        <Button fx:id="logoutBtn" text="Logout" prefWidth="160" prefHeight="50"
+                style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold; 
+                       -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+
+        <!-- Spacer at the bottom -->
+        <Region VBox.vgrow="ALWAYS"/>
     </VBox>
-
     <!-- Main Content Area -->
     <VBox style="-fx-background-color: white; -fx-padding: 20;" HBox.hgrow="ALWAYS">
         <!-- Banner -->
@@ -55,7 +75,6 @@
             <!-- Vacancy Management Buttons -->
             <HBox spacing="10" style="-fx-padding: 20 0;">
                 <Button fx:id="addVacancyBtn" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add Vacancy" />
-                <Button fx:id="manageVacanciesBtn" prefWidth="150" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Manage Vacancies" />
             </HBox>
         </VBox>
     </VBox>
