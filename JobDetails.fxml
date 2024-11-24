@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.JobDetailsController"
+      spacing="20" style="-fx-padding: 20;">
+
+    <Label fx:id="titleLabel" style="-fx-font-size: 24; -fx-font-weight: bold"/>
+    
+    <GridPane vgap="10" hgap="10">
+        <Label text="Company:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold"/>
+        <Label fx:id="companyLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold"/>
+        <Label fx:id="locationLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <Label text="Posted Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold"/>
+        <Label fx:id="datePostedLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <Label text="Deadline:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold"/>
+        <Label fx:id="deadlineLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+    
+    <VBox spacing="10">
+        <Label text="Details:" style="-fx-font-weight: bold"/>
+        <TextArea fx:id="detailsArea" wrapText="true" editable="false" prefRowCount="4"/>
+        
+        <Label text="Requirements:" style="-fx-font-weight: bold"/>
+        <TextArea fx:id="requirementsArea" wrapText="true" editable="false" prefRowCount="4"/>
+    </VBox>
+    
+    <HBox spacing="10">
+        <Button text="Apply" onAction="#handleApply" fx:id="applyButton"/>
+        <Button text="Back" onAction="#goBack"/>
+    </HBox>
+
+</VBox>
