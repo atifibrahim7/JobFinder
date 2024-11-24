@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.ManageVacanciesController"
+      style="-fx-background-color: white;">
+
+    <!-- Left Sidebar -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20;" prefWidth="200">
+        <Button fx:id="dashboardBtn" text="Dashboard" 
+                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
+                prefWidth="160"/>
+        <Button fx:id="profileBtn" text="Profile"
+                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
+                prefWidth="160"/>
+        <Button fx:id="settingsBtn" text="Settings"
+                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
+                prefWidth="160"/>
+        <Button fx:id="logoutBtn" text="Logout"
+                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
+                prefWidth="160"/>
+    </VBox>
+
+    <!-- Main Content Area -->
+    <VBox spacing="15" style="-fx-padding: 20;" HBox.hgrow="ALWAYS">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Manage Vacancies" 
+                   style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="addVacancyBtn" text="Add New Vacancy"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
+                    onAction="#handleAddVacancy"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Enter vacancy ID to delete"
+                      prefWidth="200"/>
+            <Button fx:id="deleteBtn" text="Delete Vacancy"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white;"
+                    onAction="#handleDelete"/>
+        </HBox>
+
+        <TableView fx:id="vacanciesTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="detailsColumn" text="Details" prefWidth="200"/>
+                <TableColumn fx:id="requirementsColumn" text="Requirements" prefWidth="200"/>
+                <TableColumn fx:id="locationColumn" text="Location" prefWidth="100"/>
+                <TableColumn fx:id="datePostedColumn" text="Date Posted" prefWidth="100"/>
+                <TableColumn fx:id="deadlineColumn" text="Deadline" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+</HBox>

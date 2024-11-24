@@ -21,33 +21,10 @@ public class Main extends Application {
         }
     }
 
-    public static Connection getConnection() 
-    {
-    	try {
-    		
-    		String URL = "jdbc:postgresql://localhost:5432/postgres";
-    		String USER = "postgres";
-    		String PASSWORD = "12345678";
-    		// Load the PostgreSQL driver (optional in modern versions)
-    		Class.forName("org.postgresql.Driver");
-    		return DriverManager.getConnection(URL, USER, PASSWORD);
-    	} catch (ClassNotFoundException e) {
-    		System.out.println("PostgreSQL JDBC Driver not found.");
-    		e.printStackTrace();
-    		return null;
-    	} catch (SQLException e) {
-    		System.out.println("Failed to connect to PostgreSQL database.");
-    		e.printStackTrace();
-    		return null;
-    	}
-    }
-    
     public static void main(String[] args) {
-    	// Main.getConnection();
     	Controller c = new Controller() ; 
     	
-    	c.controller_start();
-        launch(args);
+    	launch(args);
     }
     
 }

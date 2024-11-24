@@ -79,6 +79,12 @@ class job_hunter extends profile{
 }
 class employer extends profile{
     Company company;
+    public employer(String name,String username,String email,String password){
+        this.name=name;
+        this.username=username;
+        this.email=email;
+        this.password=password;
+    }
 }
 
 class Recruiter extends profile{
@@ -109,50 +115,51 @@ class job_vacancy
 }
 
 
-
 public class Controller {
 	
-	
+	public static job_hunter Current_JH;
+	public static Recruiter Current_R; 
+	public static employer Current_E;
 	
 	@FXML
     private TextField usernameField; // For username input
-
     @FXML
     private PasswordField passwordField; // For password input
 
-    
-	
     static DBHandler db = new DBHandler();
     static String curr_user;
     static String curr_type;
-    public void controller_start() {
-    	db.test();
-        System.out.println("Hello world!");
-    }
     @FXML
     public void login() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-
+        String name;
+        String email;
         if (db.isProfile(username)) {
             Map<String, String> user = db.verify(username, password);
             if (user != null) {
                 curr_user = user.get("username");
                 curr_type = user.get("type");
+                name = user.get("name");
+                email = user.get("email");
                 System.out.println("Login successful! Welcome, " + curr_user + " [" + curr_type + "]");
                 UserSession.currentUsername = curr_user;
                 UserSession.currentRole = curr_type ; 
                 System.out.println(  UserSession.currentRole );
                 if("JobHunter".equals(UserSession.currentRole)) {
+                	Current_JH = new job_hunter(name,curr_user,email,password);
                 	goToAccount();
-                	
                 }
-                else {
+                else if("Employer".equals(UserSession.currentRole)){
+                	Current_E = new employer(name,curr_user,email,password);
+                	goToEmployerDashboard();
+                //	goToAccount();
+                }
+                else if("Recruiter".equals(UserSession.currentRole)){
                 	//System.out.println("Else login ");
                 //	goToAccount();
                 }
-                
-                
+  
             } else {
                 System.out.println("Invalid username or password.");
             }
@@ -161,6 +168,7 @@ public class Controller {
         }
     }
 
+    
     @FXML
     private TextField jhnameField, jhusernameField, jhemailField , companyField;
 
@@ -189,6 +197,20 @@ public class Controller {
         // After successful registration, redirect to login or home page
         goToResumeBuilder();
     }
+    
+    @FXML
+    public void goToEmployerDashboard()
+    {
+    	try {
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("employerDashboard.fxml"));
+             Scene accountScene = new Scene(loader.load());
+             Stage stage = (Stage) usernameField.getScene().getWindow();
+             stage.setScene(accountScene);
+    	} catch (IOException e ) {
+    		e.printStackTrace();
+    	} 	
+    }
+    
     @FXML
     public void goToResumeBuilder() {
     	  try {
@@ -223,10 +245,7 @@ public class Controller {
     		
     	} catch (IOException e ) {
     		e.printStackTrace();
-    	}
-    	
-    	
-    	
+    	} 	
     }
     @FXML
     public void goToRegister() {
@@ -263,6 +282,7 @@ public class Controller {
         curr_type = "Employer";  
 
         System.out.println("Registration successful. Welcome, " + name + "!");
+        goToLogin();
     }
     public void register_recruiter()
     {

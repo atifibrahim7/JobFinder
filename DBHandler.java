@@ -147,7 +147,7 @@ class DBHandler {
     }
 
     public Map<String, String> verify(String username, String password) {
-        String query = "SELECT username, type FROM Profile WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM Profile WHERE username = ? AND password = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -158,6 +158,8 @@ class DBHandler {
                     Map<String, String> userDetails = new HashMap<>();
                     userDetails.put("username", rs.getString("username"));
                     userDetails.put("type", rs.getString("type"));
+                    userDetails.put("email",rs.getString("email"));
+                    userDetails.put("name",rs.getString("name"));
                     return userDetails;
                 }
             }
