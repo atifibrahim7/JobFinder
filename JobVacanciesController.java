@@ -19,9 +19,41 @@ public class JobVacanciesController {
 
     @FXML
     public void initialize() {
-        // Any initialization if needed
+        jobVacanciesListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Double click
+                String selectedTitle = jobVacanciesListView.getSelectionModel().getSelectedItem();
+                if (selectedTitle != null) {
+                    openJobDetails(selectedTitle);
+                }
+            }
+        });
     }
-
+    private void openJobDetails(String vacancyTitle) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("JobDetails.fxml"));
+            Scene scene = new Scene(loader.load());
+            
+            JobDetailsController controller = loader.getController();
+            DBHandler.JobVacancyDetails details = Controller.db.getJobVacancyDetails(vacancyTitle);
+            
+            if (details != null) {
+                controller.setJobDetails(
+                    details.title,
+                    details.company,
+                    details.location,
+                    details.datePosted,
+                    details.deadline,
+                    details.details,
+                    details.requirements
+                );
+                
+                Stage stage = (Stage) jobVacanciesListView.getScene().getWindow();
+                stage.setScene(scene);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setCompanyName(String companyName) {
         companyLabel.setText("Job Vacancies for: " + companyName);
         loadJobVacancies(companyName);

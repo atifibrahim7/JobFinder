@@ -20,7 +20,7 @@ public class RecruiterProfileController {
     private Button viewCompaniesBtn;
 
     @FXML
-    private Button manageVacanciesBtn;
+    private Button manageApplicationBtn;
 
     @FXML
     private Button logoutBtn;
@@ -64,7 +64,7 @@ public class RecruiterProfileController {
     private void setupButtonHandlers() {
         profileBtn.setOnAction(e -> handleProfile());
         viewCompaniesBtn.setOnAction(e -> handleViewCompanies());
-        manageVacanciesBtn.setOnAction(e -> handleManageVacancies());
+        manageApplicationBtn.setOnAction(e -> handleManageApplication());
         logoutBtn.setOnAction(e -> handleLogout());
     }
 
@@ -121,11 +121,11 @@ public class RecruiterProfileController {
         }
     }
 
-    private void handleManageVacancies() {
+    private void handleManageApplication() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ManageVacancies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("recruiterApplication.fxml"));
             Scene manageVacanciesScene = new Scene(loader.load());
-            Stage stage = (Stage) manageVacanciesBtn.getScene().getWindow();
+            Stage stage = (Stage) manageApplicationBtn.getScene().getWindow();
             stage.setScene(manageVacanciesScene);
         } catch (IOException e) {
             e.printStackTrace();

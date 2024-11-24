@@ -41,7 +41,7 @@ class Resume{
 
 class Company
 {
-    protected String C_name;
+    public String C_name;
     protected String address;
     protected String email;
     public Company(){}
@@ -99,20 +99,29 @@ class Recruiter extends profile{
 
 class application
 {
-    job_hunter applicant;
-    String date;
+   String companyName;
+   String vacancyTitle;
+   String requirements;
+   String date;
+   String username;
+   String status = "Pending";
+   public void update_status(String newStatus)
+   {
+   	Controller.db.update_application(newStatus,vacancyTitle,username);
+   }
 }
+	
 
 class job_vacancy
 {
-    Company company;
-    String details;
-    String requirements;
-    String location;
-    String date_posted;
-    String deadline;
-    ArrayList<application> applications;
-    Recruiter recruiter;
+   public Company company;
+   public  String details;
+   public   String requirements;
+   public   String location;
+   public String date_posted;
+   public String deadline;
+    public ArrayList<application> applications;
+    public  Recruiter recruiter;
 }
 
 

@@ -55,6 +55,111 @@ class DBHandler {
 
         }
     }
+    
+    
+    public void update_application(String new_status,String vacancy_title, String username)
+    {
+    	String query = "UPDATE application SET status = ? WHERE vacancy_title = ? AND applicant_username = ?";
+    	try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, new_status);
+            pstmt.setString(2, vacancy_title);
+            pstmt.setString(3, username);
+            pstmt.executeUpdate();
+            System.out.println("Application Status Updated");
+        } catch (SQLException e) {
+            System.err.println("failed to update application");
+            e.printStackTrace(); // Print the stack trace for debugging
+        }
+   
+    }
+    public ArrayList<ArrayList<String>> getApplications(String username)
+    {
+    	String query = "select company,requirements,jobvacancy.vacancy_title,applicant_username,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title "
+    			+ "where jobvacancy.recruiter_username = ?";
+        ArrayList<ArrayList<String>> applications = new ArrayList<>();
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+            	String temp = rs.getString("status");
+            	if("pending".equals(temp)) {
+ 	                ArrayList<String> application1 = new ArrayList<>();
+ 	                application1.add(rs.getString("company"));
+ 	                application1.add(rs.getString("requirements"));
+ 	                application1.add(rs.getString("vacancy_title"));
+ 	                application1.add(rs.getString("applicant_username"));
+ 	                applications.add(application1);
+            	}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving companies: " + e.getMessage());
+        }
+        return applications;
+    }
+
+    public void addApplication(String username, String vacancyTitle, Date applicationDate) {
+        String query = "INSERT INTO application (applicant_username,date_applied ,  vacancy_title , status ) " +
+                      "VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            pstmt.setDate(2, applicationDate);
+            pstmt.setString(3, vacancyTitle);
+            pstmt.setString(4, "pending");
+            pstmt.executeUpdate();
+            System.out.println("Application submitted successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to submit application");
+            e.printStackTrace();
+            throw new RuntimeException("Failed to submit application", e);
+        }
+    }
+
+    public JobVacancyDetails getJobVacancyDetails(String vacancyTitle) {
+        String query = "SELECT * FROM JobVacancy WHERE vacancy_title = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, vacancyTitle);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return new JobVacancyDetails(
+                    rs.getString("vacancy_title"),
+                    rs.getString("company"),
+                    rs.getString("location"),
+                    rs.getDate("date_posted"),
+                    rs.getDate("deadline"),
+                    rs.getString("details"),
+                    rs.getString("requirements")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to retrieve job vacancy details");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static class JobVacancyDetails {
+        public final String title;
+        public final String company;
+        public final String location;
+        public final Date datePosted;
+        public final Date deadline;
+        public final String details;
+        public final String requirements;
+        
+        public JobVacancyDetails(String title, String company, String location, 
+                               Date datePosted, Date deadline, String details, 
+                               String requirements) {
+            this.title = title;
+            this.company = company;
+            this.location = location;
+            this.datePosted = datePosted;
+            this.deadline = deadline;
+            this.details = details;
+            this.requirements = requirements;
+        }
+    }
     // Add a Profile
     public void addProfile(String username, String name, String email, String password, String type) {
     	String query = "INSERT INTO profile (username, name, email, password, type) VALUES (?, ?, ?, ?, ?::user_type)";

@@ -11,7 +11,7 @@
     
     <Label fx:id="companyLabel" text="" style="-fx-font-size: 24;"/>
     
-    <ListView fx:id="jobVacanciesListView" prefHeight="400" prefWidth="300"/>
+    <ListView fx:id="jobVacanciesListView" prefHeight="700" prefWidth="700"/>
     
     <Button text="Back" onAction="#goBack"/>
 </VBox>
