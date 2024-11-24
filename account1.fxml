@@ -29,7 +29,7 @@
         <Region VBox.vgrow="ALWAYS"/>
         
         <!-- Pending Applications Button -->
-        <Button fx:id="pendingApplicationsBtn" text="Pending\nApplications" prefWidth="160" prefHeight="50"
+        <Button fx:id="pendingApplicationsBtn" text="Pending Applications" prefWidth="160" prefHeight="50"
                 style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
         
         <!-- Spacer -->
@@ -43,7 +43,7 @@
         <Region VBox.vgrow="ALWAYS"/>
 
         <!-- View Companies Button -->
-        <Button fx:id="viewCompaniesBtn" text="View\nCompanies" prefWidth="160" prefHeight="50"
+        <Button fx:id="viewCompaniesBtn" text="View Companies" prefWidth="160" prefHeight="50"
                 style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
         
         <!-- Spacer -->

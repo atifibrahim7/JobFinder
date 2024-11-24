@@ -13,7 +13,7 @@ import java.util.Map;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "12345678";
+    private static final String DB_PASSWORD = "abbasi123";
 
     private Connection conn;
 
@@ -44,6 +44,8 @@ class DBHandler {
             while (resultSet.next()) {
                 System.out.println("Query Result: " + resultSet.getInt(1));
             }
+            
+           
         } catch (Exception e) {
             System.out.println("Connection failed: " + e.getMessage());
 
@@ -91,7 +93,26 @@ class DBHandler {
         
         return companies;
     }
-   
+
+public List<String> getJobVacanciesByCompany(String companyName) {
+    List<String> jobVacancies = new ArrayList<>();
+    String query = "SELECT vacancy_title FROM JobVacancy WHERE company = (SELECT name FROM Company WHERE name = ?)";
+
+    try ( PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+    	pstmt.setString(1, companyName);
+
+        try (ResultSet resultSet = pstmt.executeQuery()) {
+            while (resultSet.next()) {
+                jobVacancies.add(resultSet.getString("vacancy_title"));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return jobVacancies;
+}
     // Retrieve all JobHunters
     public List<String> getAllJobHunters() {
         List<String> jobHunters = new ArrayList<>();
