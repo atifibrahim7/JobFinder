@@ -23,9 +23,9 @@ public class ManageVacanciesController {
     @FXML private TextField searchField;
     @FXML private Button deleteBtn;
     @FXML private Button addVacancyBtn;
-    @FXML private Button dashboardBtn;
     @FXML private Button profileBtn;
-    @FXML private Button settingsBtn;
+    @FXML private Button manageVacanciesBtn;
+    @FXML private Button viewCompaniesBtn;
     @FXML private Button logoutBtn;
 
     private Recruiter currentRecruiter;
@@ -56,11 +56,8 @@ public class ManageVacanciesController {
     }
 
     private void loadVacancies() {
-        // Load vacancies from database or storage
+        // Add database query logic here to load vacancies
         vacanciesTable.setItems(vacanciesList);
-        
-        //display the query information for 
-        
     }
 
     @FXML
@@ -75,6 +72,7 @@ public class ManageVacanciesController {
             Stage stage = (Stage) addVacancyBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
+            showAlert("Error", "Failed to open Add Vacancy window.");
             e.printStackTrace();
         }
     }
@@ -87,28 +85,39 @@ public class ManageVacanciesController {
             return;
         }
 
-        // Implementation for deletion logic
-        // Remove from database and refresh table
-        loadVacancies();
+        // Add database deletion logic here
+        loadVacancies(); // Refresh table after deletion
     }
 
     private void setupNavigationHandlers() {
-        dashboardBtn.setOnAction(e -> refreshDashboard());
         profileBtn.setOnAction(e -> navigateToProfile());
-        settingsBtn.setOnAction(e -> navigateToSettings());
+        manageVacanciesBtn.setOnAction(e -> loadVacancies());
+        viewCompaniesBtn.setOnAction(e -> navigateToViewCompanies());
         logoutBtn.setOnAction(e -> handleLogout());
     }
 
-    private void refreshDashboard() {
-        loadVacancies();
-    }
-
     private void navigateToProfile() {
-        // Implementation for profile navigation
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployerDashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) profileBtn.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            showAlert("Error", "Failed to navigate to Profile.");
+            e.printStackTrace();
+        }
     }
 
-    private void navigateToSettings() {
-        // Implementation for settings navigation
+    private void navigateToViewCompanies() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            showAlert("Error", "Failed to navigate to View Companies.");
+            e.printStackTrace();
+        }
     }
 
     private void handleLogout() {
@@ -117,6 +126,7 @@ public class ManageVacanciesController {
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
+            showAlert("Error", "Failed to logout.");
             e.printStackTrace();
         }
     }

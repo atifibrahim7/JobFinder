@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<HBox xmlns="http://javafx.com/javafx/19"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="application.ManageVacanciesController"
-      style="-fx-background-color: white;">
-
-    <!-- Left Sidebar -->
-    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20;" prefWidth="200">
-        <Button fx:id="dashboardBtn" text="Dashboard" 
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="profileBtn" text="Profile"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="settingsBtn" text="Settings"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="logoutBtn" text="Logout"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
+<HBox prefHeight="800" prefWidth="800" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ManageVacanciesController">
+    <VBox prefWidth="200" spacing="20" style="-fx-background-color: #f0f0f0;">
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+        </padding>
+        
+        <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ffffff;" text="Profile" />
+                
+        <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ffffff;" text="Manage Vacancies" />
+                
+        <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ffffff;" text="View Companies" />
+                
+        <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold;" 
+                text="Logout" />
     </VBox>
-
-    <!-- Main Content Area -->
+    
     <VBox spacing="15" style="-fx-padding: 20;" HBox.hgrow="ALWAYS">
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Manage Vacancies" 
@@ -35,7 +32,7 @@
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
                     onAction="#handleAddVacancy"/>
         </HBox>
-
+        
         <HBox spacing="10" alignment="CENTER_LEFT">
             <TextField fx:id="searchField" promptText="Enter vacancy ID to delete"
                       prefWidth="200"/>
@@ -43,7 +40,7 @@
                     style="-fx-background-color: #ff4444; -fx-text-fill: white;"
                     onAction="#handleDelete"/>
         </HBox>
-
+        
         <TableView fx:id="vacanciesTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>

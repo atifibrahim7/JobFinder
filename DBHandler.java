@@ -10,6 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
@@ -205,6 +209,41 @@ public List<String> getJobVacanciesByCompany(String companyName) {
          }
     	
     }
+    
+    public void addVacancy(String company, String details, String requirements, String location, 
+            String datePosted, String deadline, String recruiter) {
+        String query = "INSERT INTO JobVacancy (company, details, requirements, location, date_posted, deadline, recruiter_username, vacancy_title) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            // Generate a unique vacancy title using timestamp
+            String vacancyTitle = company + "_" + System.currentTimeMillis();
+
+            // Convert String dates to java.sql.Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.sql.Date sqlDatePosted = new java.sql.Date(sdf.parse(datePosted).getTime());
+            java.sql.Date sqlDeadline = new java.sql.Date(sdf.parse(deadline).getTime());
+
+            pstmt.setString(1, company);
+            pstmt.setString(2, details);
+            pstmt.setString(3, requirements);
+            pstmt.setString(4, location);
+            pstmt.setDate(5, sqlDatePosted);  // Use setDate for DATE type
+            pstmt.setDate(6, sqlDeadline);    // Use setDate for DATE type
+            pstmt.setString(7, recruiter);
+            pstmt.setString(8, vacancyTitle);
+
+            pstmt.executeUpdate();
+            System.out.println("Vacancy added successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to add Vacancy");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.err.println("Error: Invalid date format. Please use 'yyyy-MM-dd'.");
+            e.printStackTrace();
+        }
+    }
+    
     public ArrayList<String> getResume(String username)
     {
     	String query = "SELECT * FROM resume WHERE username = ?";
@@ -309,7 +348,8 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             System.err.println("Error: Unable to delete profile for username: " + username);
         }
     }
-
+    
+    
     // Close the connection
     public void close() {
         try {

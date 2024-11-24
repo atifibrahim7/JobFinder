@@ -1,66 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox xmlns="http://javafx.com/javafx/19"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="application.AddVacancyController"
-      style="-fx-background-color: white;">
+<HBox prefHeight="800" prefWidth="800" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddVacancyController">
 
-    <!-- Left Sidebar -->
-    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20;" prefWidth="200">
-        <Button fx:id="dashboardBtn" text="Dashboard" 
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="profileBtn" text="Profile"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="settingsBtn" text="Settings"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-        <Button fx:id="logoutBtn" text="Logout"
-                style="-fx-background-color: white; -fx-text-fill: #000000; -fx-alignment: LEFT;"
-                prefWidth="160"/>
-    </VBox>
+   <!-- Left Sidebar -->
+   <VBox prefWidth="200" spacing="20" style="-fx-background-color: #f0f0f0;">
+      <padding>
+         <Insets bottom="10" left="10" right="10" top="10" />
+      </padding>
 
-    <!-- Main Content Area -->
-    <VBox spacing="15" style="-fx-padding: 20;" HBox.hgrow="ALWAYS">
-        <Label text="Add New Vacancy" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+      <!-- Profile Button -->
+      <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Profile" />
 
-        <GridPane vgap="15" hgap="10">
-            <padding><Insets top="20" bottom="20"/></padding>
+      <!-- Manage Vacancies Button -->
+      <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Manage Vacancies" />
 
-            <Label text="Job Details:" 
-                   GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextArea fx:id="detailsField" wrapText="true"
-                      prefRowCount="3" prefColumnCount="30"
-                      GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+      <!-- View Companies Button -->
+      <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="View Companies" />
 
-            <Label text="Requirements:" 
-                   GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextArea fx:id="requirementsField" wrapText="true"
-                      prefRowCount="3" prefColumnCount="30"
-                      GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+      <!-- Logout Button -->
+      <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Logout" />
+   </VBox>
 
-            <Label text="Location:" 
-                   GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="locationField"
-                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+   <!-- Main Content Area -->
+   <VBox spacing="15" style="-fx-padding: 20;" HBox.hgrow="ALWAYS">
+      <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Add New Vacancy" />
 
-            <Label text="Deadline:" 
-                   GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="deadlinePicker"
-                        GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-        </GridPane>
+      <GridPane hgap="10" vgap="15">
+         <padding><Insets bottom="20" top="20" /></padding>
 
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="cancelBtn" text="Cancel"
-                    style="-fx-background-color: #ff4444; -fx-text-fill: white;"
-                    onAction="#handleCancel"/>
-            <Button fx:id="submitBtn" text="Submit"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                    onAction="#handleSubmit"/>
-        </HBox>
-    </VBox>
+         <Label text="Job Details:" GridPane.rowIndex="1" />
+         <TextArea fx:id="detailsField" prefColumnCount="30" prefRowCount="3" wrapText="true" GridPane.rowIndex="2" />
+
+         <Label text="Requirements:" GridPane.rowIndex="4" />
+         <TextArea fx:id="requirementsField" prefColumnCount="30" prefRowCount="3" wrapText="true" GridPane.rowIndex="5" />
+
+         <Label text="Location:" GridPane.rowIndex="6" />
+         <TextField fx:id="locationField" GridPane.rowIndex="7" />
+
+         <Label text="Deadline:" GridPane.rowIndex="8" />
+         <DatePicker fx:id="deadlinePicker" GridPane.rowIndex="9" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+
+         <HBox alignment="CENTER_RIGHT" spacing="10">
+         <Button fx:id="cancelBtn" onAction="#handleCancel" style="-fx-background-color: #ff4444; -fx-text-fill: white;" text="Cancel" />
+         <Button fx:id="submitBtn" onAction="#handleSubmit" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Submit" />
+      </HBox>
+   </VBox>
 </HBox>

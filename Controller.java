@@ -84,6 +84,7 @@ class employer extends profile{
         this.username=username;
         this.email=email;
         this.password=password;
+        
     }
 }
 
@@ -121,7 +122,7 @@ public class Controller {
 	public static Recruiter Current_R; 
 	public static employer Current_E;
 	
-	
+
 	//login
 	@FXML
     private TextField usernameField; // For username input
@@ -188,7 +189,7 @@ public class Controller {
             System.out.println("Profile already exists. Please login instead.");
             return;
         }
-
+        
     	Current_JH = new job_hunter(name,username,email,password);
         db.addProfile(username, name, email, password, "JobHunter");
         db.add_jobhunter(name, username, password, email);
