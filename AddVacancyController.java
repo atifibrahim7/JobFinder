@@ -1,6 +1,7 @@
 package application;
 import javafx.application.Application;
 
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 public class AddVacancyController {
     @FXML private TextArea detailsField;
     @FXML private TextArea requirementsField;
@@ -31,10 +33,12 @@ public class AddVacancyController {
     @FXML private Button submitBtn;
     @FXML private Button cancelBtn;
 
+
     private Recruiter currentRecruiter;
     private Company company;
     public String companyString;
     private ObservableList<job_vacancy> vacanciesList = FXCollections.observableArrayList();
+
 
     public void initialize() {
         setupNavigationHandlers();
@@ -45,9 +49,12 @@ public class AddVacancyController {
             ArrayList<String> employer_info = Controller.db.getUser(UserSession.currentUsername, UserSession.currentRole);
             
             if (employer_info != null && !employer_info.isEmpty()) {
+            	
+                 companyString = employer_info.get(4);
 
-                String companyString = employer_info.get(4);
-                
+
+                System.out.println("fetched company Details:");
+                System.out.println("Company: " + companyString);
                
             }
         } catch (Exception e) {
@@ -55,13 +62,17 @@ public class AddVacancyController {
         }
     }
 
+
     public void setRecruiter(Recruiter recruiter) {
         this.currentRecruiter = recruiter;
     }
 
+
     public void setCompany(Company company) {
         this.company = company;
     }
+
+
 
 
     @FXML
@@ -85,10 +96,12 @@ public class AddVacancyController {
     }
     
 
+
     @FXML
     private void handleCancel() {
         navigateToManageVacancies();
     }
+
 
     private boolean validateInputs() {
         if (detailsField.getText().isEmpty() || 
@@ -99,13 +112,16 @@ public class AddVacancyController {
             return false;
         }
 
+
         if (deadlinePicker.getValue().isBefore(LocalDate.now())) {
             showAlert("Error", "Deadline cannot be in the past.");
             return false;
         }
 
+
         return true;
     }
+
 
     private job_vacancy createVacancy() {
         job_vacancy vacancy = new job_vacancy();
@@ -119,6 +135,7 @@ public class AddVacancyController {
         vacancy.deadline = deadlinePicker.getValue().toString();
         vacancy.recruiter = this.currentRecruiter;
 
+
         // Print all the details of the vacancy
         System.out.println("Job Vacancy Details:");
         System.out.println("Company: " + companyString);
@@ -129,8 +146,11 @@ public class AddVacancyController {
         System.out.println("Deadline: " + vacancy.deadline);
         System.out.println("Recruiter: " + UserSession.currentUsername);
 
+
         return vacancy;
     }
+
+
 
 
     private void setupNavigationHandlers() {
@@ -139,6 +159,7 @@ public class AddVacancyController {
         viewCompaniesBtn.setOnAction(e -> navigateToViewCompanies());
         logoutBtn.setOnAction(e -> handleLogout());
     }
+
 
     private void navigateToManageVacancies() {
     	try {
@@ -153,6 +174,7 @@ public class AddVacancyController {
         }
     }
 
+
     private void navigateToProfile() {
     	try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("employerDashboard.fxml"));
@@ -163,6 +185,7 @@ public class AddVacancyController {
             e.printStackTrace();
         }
     }
+
 
     private void navigateToViewCompanies() {
     	try {
@@ -175,6 +198,7 @@ public class AddVacancyController {
         }
     }
 
+
     private void handleLogout() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -186,6 +210,7 @@ public class AddVacancyController {
         }
     }
 
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -193,3 +218,6 @@ public class AddVacancyController {
         alert.showAndWait();
     }
 }
+
+
+

@@ -57,6 +57,54 @@ class DBHandler {
     }
     
     
+    public void addEndorsement(String jobHunterUsername, String endorserUsername, String description) {
+        String query = "INSERT INTO Endorsements (job_hunter_username, endorser_username, description, date_endorsed) " +
+                      "VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            // Get current date
+            java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
+           
+            pstmt.setString(1, jobHunterUsername);
+            pstmt.setString(2, endorserUsername);
+            pstmt.setString(3, description);
+            pstmt.setDate(4, currentDate);
+           
+            pstmt.executeUpdate();
+            System.out.println("Endorsement added successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to add endorsement");
+            e.printStackTrace();
+            throw new RuntimeException("Failed to add endorsement", e);
+        }
+    }
+   
+    public ArrayList<Endorsement> getEndorsementsByEndorser(String endorserUsername) {
+        ArrayList<Endorsement> endorsements = new ArrayList<>();
+        String query = "SELECT * FROM Endorsements WHERE endorser_username = ?";
+       
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, endorserUsername);
+            ResultSet rs = pstmt.executeQuery();
+           
+            while (rs.next()) {
+                Endorsement endorsement = new Endorsement(
+                    rs.getString("job_hunter_username"),
+                    rs.getString("endorser_username"),
+                    rs.getString("description"),
+                    rs.getDate("date_endorsed").toString()
+                );
+                endorsements.add(endorsement);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to fetch endorsements");
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch endorsements", e);
+        }
+       
+        return endorsements;
+    }
+
+    
     public void update_application(String new_status,String vacancy_title, String username)
     {
     	String query = "UPDATE application SET status = ? WHERE vacancy_title = ? AND applicant_username = ?";

@@ -59,6 +59,34 @@ abstract class profile{
     protected String password;
 }
 
+
+class Endorsement {
+	   private String jobHunterUsername;
+	   private String employerUsername;
+	   private String description;
+	   private String date;
+	   public Endorsement(String jobHunterUsername, String employerUsername, String description, String date) {
+	       this.jobHunterUsername = jobHunterUsername;
+	       this.employerUsername = employerUsername;
+	       this.description = description;
+	       this.date = date;
+	   }
+	   public String getJobHunterUsername() {
+	       return jobHunterUsername;
+	   }
+	   public String getEmployerUsername() {
+	       return employerUsername;
+	   }
+	   public String getDescription() {
+	       return description;
+	   }
+	   public String getDate() {
+	       return date;
+	   }
+	}
+
+
+
 class job_hunter extends profile{
     protected Resume resume;
     public Company company;

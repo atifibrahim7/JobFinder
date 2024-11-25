@@ -28,8 +28,11 @@ public class EmployerDashboardController {
     @FXML
     private Button addVacancyBtn;
     @FXML
+    private Button GiveEndorsementsBtn;
+    @FXML
     private Button manageVacanciesBtn;
-    
+    @FXML
+    private Button ViewEndorsementsBtn11;
     @FXML
     private Rectangle banner;
     @FXML
@@ -74,14 +77,35 @@ public class EmployerDashboardController {
         profileBtn.setOnAction(e -> handleProfile());
         logoutBtn.setOnAction(e -> handleLogout());
         addVacancyBtn.setOnAction(e -> handleAddVacancy());
+        GiveEndorsementsBtn.setOnAction(e -> handleGotoEndorsment());
         manageVacanciesBtn.setOnAction(e -> handleManageVacancies());
         viewCompaniesBtn.setOnAction(e -> handleViewCompanies());
-
+        ViewEndorsementsBtn11.setOnAction(e -> goToViewEndorsements());
     }
-
+    private void goToViewEndorsements() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewEndorsements.fxml"));
+            Scene viewEndorsementsScene = new Scene(loader.load());
+            Stage stage = (Stage) ViewEndorsementsBtn11.getScene().getWindow();
+            stage.setScene(viewEndorsementsScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            //showAlert("Error", "Failed to load endorsements page");
+        }
+    }
     private void handleLogout() {
     	try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) logoutBtn.getScene().getWindow();
+            stage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleGotoEndorsment() {
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewJobHunters.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);
