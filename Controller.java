@@ -166,7 +166,7 @@ public class Controller {
     @FXML
     private PasswordField passwordField; // For password input
 
-    static DBHandler db = new DBHandler();
+    static DBHandler db = DBHandler.getInstance();
     static String curr_user;
     static String curr_type;
     @FXML

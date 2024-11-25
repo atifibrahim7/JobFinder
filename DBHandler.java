@@ -17,12 +17,14 @@ import java.text.SimpleDateFormat;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "abbasi123";
+    private static final String DB_PASSWORD = "12345678";
 
     private Connection conn;
+    
+    private static DBHandler instance;
 
     // Constructor to establish the connection
-    public DBHandler() {
+    private DBHandler() {
         try {
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             System.out.println("Database connected successfully.");
@@ -30,6 +32,14 @@ class DBHandler {
             System.err.println("Error: Failed to connect to the database.");
             System.exit(1); // Terminate the program on connection failure
         }
+    }
+    
+
+    public static DBHandler getInstance() {
+        if (instance == null) {
+            instance = new DBHandler();
+        }
+        return instance;
     }
 
     public void test()
