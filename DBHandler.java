@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "12345678";
+    private static final String DB_PASSWORD = "abbasi123";
 
     private Connection conn;
     
@@ -284,6 +284,67 @@ class DBHandler {
         return companies;
     }
 
+    
+    public List<String> getVacanciesbyCompany(String companyString) {
+        List<String> vacancies = new ArrayList<>();
+        String query = "SELECT * FROM JobVacancy WHERE company = ?";
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, companyString);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                String vacancyInfo = String.format("Title: %s\n" +
+                                                 "Details: %s\n" +
+                                                 "Requirements: %s\n" +
+                                                 "Location: %s\n" +
+                                                 "Posted: %s\n" +
+                                                 "Deadline: %s",
+                    rs.getString("vacancy_title"),
+                    rs.getString("details"),
+                    rs.getString("requirements"),
+                    rs.getString("location"),
+                    rs.getDate("date_posted").toString(),
+                    rs.getDate("deadline").toString());
+                vacancies.add(vacancyInfo);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: Unable to retrieve job vacancies for company: " + companyString);
+            e.printStackTrace();
+        }
+        return vacancies;
+    }
+    public boolean isVacancyExists(String vacancyTitle, String company) {
+        String query = "SELECT COUNT(*) FROM JobVacancy WHERE vacancy_title = ? AND company = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, vacancyTitle);
+            pstmt.setString(2, company);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking vacancy existence: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteVacancy(String vacancyTitle, String company) {
+        String query = "DELETE FROM JobVacancy WHERE vacancy_title = ? AND company = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, vacancyTitle);
+            pstmt.setString(2, company);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.err.println("Error deleting vacancy: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    
 public List<String> getJobVacanciesByCompany(String companyName) {
     List<String> jobVacancies = new ArrayList<>();
     String query = "SELECT vacancy_title FROM JobVacancy WHERE company = (SELECT name FROM Company WHERE name = ?)";
@@ -408,14 +469,11 @@ public List<String> getJobVacanciesByCompany(String companyName) {
     }
     
     public void addVacancy(String company, String details, String requirements, String location, 
-            String datePosted, String deadline, String recruiter) {
+            String datePosted, String deadline, String recruiter, String title) {
         String query = "INSERT INTO JobVacancy (company, details, requirements, location, date_posted, deadline, recruiter_username, vacancy_title) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            // Generate a unique vacancy title using timestamp
-            String vacancyTitle = company + "_" + System.currentTimeMillis();
-
             // Convert String dates to java.sql.Date
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date sqlDatePosted = new java.sql.Date(sdf.parse(datePosted).getTime());
@@ -425,10 +483,10 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             pstmt.setString(2, details);
             pstmt.setString(3, requirements);
             pstmt.setString(4, location);
-            pstmt.setDate(5, sqlDatePosted);  // Use setDate for DATE type
-            pstmt.setDate(6, sqlDeadline);    // Use setDate for DATE type
+            pstmt.setDate(5, sqlDatePosted);
+            pstmt.setDate(6, sqlDeadline);
             pstmt.setString(7, recruiter);
-            pstmt.setString(8, vacancyTitle);
+            pstmt.setString(8, title);  // Using the provided title instead of generating one
 
             pstmt.executeUpdate();
             System.out.println("Vacancy added successfully.");
@@ -437,10 +495,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             e.printStackTrace();
         } catch (ParseException e) {
             System.err.println("Error: Invalid date format. Please use 'yyyy-MM-dd'.");
-            e.printStackTrace();
-        }
-    }
-    
+            e.printStackTrace();}}
     public ArrayList<String> getResume(String username)
     {
     	String query = "SELECT * FROM resume WHERE username = ?";
