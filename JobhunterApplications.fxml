@@ -6,44 +6,57 @@
 <HBox xmlns="http://javafx.com/javafx/19"
      xmlns:fx="http://javafx.com/fxml/1" 
      fx:controller="application.JobhunterApplicationsController"
-     prefHeight="600.0" prefWidth="800.0">
+     prefHeight="600.0" prefWidth="800.0"
+     style="-fx-background-color: white;">
           
    <!-- Left Menu -->
-   <VBox spacing="0" style="-fx-background-color: #f0f0f0;" prefWidth="200">
+   <VBox spacing="0" style="-fx-background-color: #333333;" prefWidth="200">
        <padding>
            <Insets top="20" right="20" bottom="20" left="20"/>
        </padding>
        <Region VBox.vgrow="ALWAYS"/>
       
        <Button fx:id="profileBtn" text="Profile" prefWidth="160" prefHeight="50"
-               style="-fx-background-color: #ffffff;"/>
+               style="-fx-background-color: transparent; -fx-border-color: white; 
+                      -fx-text-fill: white; -fx-border-radius: 20; 
+                      -fx-background-radius: 20; -fx-font-weight: bold;"/>
       
        <Region VBox.vgrow="ALWAYS"/>
       
-       <Button fx:id="pendingApplicationsBtn" text="Pending&#10;Applications" prefWidth="160" prefHeight="50"
-               style="-fx-background-color: #ffffff;"/>
+       <Button fx:id="pendingApplicationsBtn" text="Pending Applications" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                      -fx-border-radius: 20; -fx-background-radius: 20; 
+                      -fx-font-weight: bold;"/>
       
        <Region VBox.vgrow="ALWAYS"/>
+       
        <Button fx:id="jobVacanciesBtn" text="Job Vacancies" prefWidth="160" prefHeight="50"
-               style="-fx-background-color: #ffffff;"/>
+               style="-fx-background-color: transparent; -fx-border-color: white; 
+                      -fx-text-fill: white; -fx-border-radius: 20; 
+                      -fx-background-radius: 20; -fx-font-weight: bold;"/>
       
        <Region VBox.vgrow="ALWAYS"/>
-       <Button fx:id="viewCompaniesBtn" text="View&#10;Companies" prefWidth="160" prefHeight="50"
-               style="-fx-background-color: #ffffff;"/>
+       
+       <Button fx:id="viewCompaniesBtn" text="View Companies" prefWidth="160" prefHeight="50"
+               style="-fx-background-color: transparent; -fx-border-color: white; 
+                      -fx-text-fill: white; -fx-border-radius: 20; 
+                      -fx-background-radius: 20; -fx-font-weight: bold;"/>
       
        <Region VBox.vgrow="ALWAYS"/>
       
        <Button fx:id="logoutBtn" text="Logout" prefWidth="160" prefHeight="50"
-               style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold;"/>
+               style="-fx-background-color: #ff4c4c; -fx-text-fill: white; 
+                      -fx-background-radius: 20; -fx-font-weight: bold;"/>
       
        <Region VBox.vgrow="ALWAYS"/>
    </VBox>
   
    <!-- Main Content (Right Pane) -->
    <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 20px;">
-       <Label text="Jonhunter Applications" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+       <Label text="Jobhunter Applications" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
       
-       <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+       <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" 
+                  style="-fx-background: white; -fx-border-color: transparent;">
            <VBox fx:id="applicationsContainer" spacing="10">
                <!-- Applications will be added here dynamically -->
            </VBox>

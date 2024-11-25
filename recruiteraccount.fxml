@@ -10,10 +10,11 @@
 <HBox xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1"  
       fx:controller="application.RecruiterProfileController"
-      prefHeight="600.0" prefWidth="800.0">
+      prefHeight="600.0" prefWidth="800.0"
+      style="-fx-background-color: white;">
             
     <!-- Left Menu -->
-    <VBox spacing="0" style="-fx-background-color: #f0f0f0;" prefWidth="200">
+    <VBox spacing="0" style="-fx-background-color: #333333;" prefWidth="200">
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>
@@ -23,76 +24,112 @@
         
         <!-- Profile Button -->
         <Button fx:id="profileBtn" text="Profile" prefWidth="160" prefHeight="50"
-                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+                style="-fx-background-color: #D1AA5A;
+                       -fx-text-fill: white;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 20;
+                       -fx-border-radius: 20;"/>
         
         <!-- Spacer -->
         <Region VBox.vgrow="ALWAYS"/>
 
         <!-- View Companies Button -->
         <Button fx:id="viewCompaniesBtn" text="View Companies" prefWidth="160" prefHeight="50"
-                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+                style="-fx-background-color: transparent;
+                       -fx-border-color: white;
+                       -fx-text-fill: white;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 20;
+                       -fx-border-radius: 20;"/>
         
         <!-- Spacer -->
         <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Manage Vacancies Button -->
-        <Button fx:id="manageApplicationBtn" text="Manage Applications" prefWidth="160" prefHeight="50"
-                style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+        <Button fx:id="manageApplicationBtn" text="Pending Applications" prefWidth="160" prefHeight="50"
+                style="-fx-background-color: transparent;
+                       -fx-border-color: white;
+                       -fx-text-fill: white;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 20;
+                       -fx-border-radius: 20;"/>
         
         <!-- Spacer -->
         <Region VBox.vgrow="ALWAYS"/>
         
         <!-- Logout Button -->
         <Button fx:id="logoutBtn" text="Logout" prefWidth="160" prefHeight="50"
-                style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold; 
-                       -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';"/>
+                style="-fx-background-color: #ff4c4c;
+                       -fx-text-fill: white;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 20;"/>
 
         <!-- Spacer at the bottom -->
         <Region VBox.vgrow="ALWAYS"/>
     </VBox>
     
     <!-- Main Content (Right Pane) -->
-    <VBox spacing="20" HBox.hgrow="ALWAYS" style="-fx-padding: 20px;">
+    <VBox spacing="20" HBox.hgrow="ALWAYS">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
         
         <!-- Banner -->
-        <Rectangle fx:id="banner" width="600" height="100" fill="LIGHTGRAY"/>
+        <Rectangle fx:id="banner" width="520" height="100" 
+                  style="-fx-fill: #F7F7F7; -fx-arc-height: 20; -fx-arc-width: 20;"/>
         
         <!-- Profile Section -->
         <HBox spacing="20">
-            <Rectangle fx:id="profilePicture" width="100" height="100" fill="GRAY"/>
+            <Rectangle fx:id="profilePicture" width="100" height="100" 
+                      style="-fx-fill: #D1AA5A; -fx-arc-height: 100; -fx-arc-width: 100;"/>
             <VBox spacing="10">
-                <Label fx:id="nameLabel" text="Name: John Doe"/>
-                <Label fx:id="emailLabel" text="Email: john.doe@example.com"/>
-                <Label fx:id="positionLabel" text="Username: johndoe"/>
+                <Label fx:id="nameLabel" text="Name: John Doe"
+                       style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+                <Label fx:id="emailLabel" text="Email: john.doe@example.com"
+                       style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                <Label fx:id="positionLabel" text="Username: johndoe"
+                       style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
             </VBox>
         </HBox>
         
         <!-- Recruiter Information -->
-        <VBox fx:id="recruiterInfoBox" spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 20px;">
-            <Label text="Recruiter Information" style="-fx-font-weight: bold;"/>
+        <VBox fx:id="recruiterInfoBox" spacing="20" 
+              style="-fx-background-color: #F7F7F7;
+                     -fx-background-radius: 15;
+                     -fx-padding: 30;">
+            <Label text="Recruiter Information" 
+                  style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
             
             <!-- Education History -->
             <VBox spacing="10">
-                <Label text="Education History:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="educationLabel" text=""/>
+                <Label text="Education History:" 
+                      style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+                <Label fx:id="educationLabel" 
+                      style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
             </VBox>
             
             <!-- Past Experience -->
             <VBox spacing="10">
-                <Label text="Past Experience:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="experienceLabel" text=""/>
+                <Label text="Past Experience:" 
+                      style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+                <Label fx:id="experienceLabel" 
+                      style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
             </VBox>
             
             <!-- Skills -->
             <VBox spacing="10">
-                <Label text="Skills:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="skillsLabel" text=""/>
+                <Label text="Skills:" 
+                      style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+                <Label fx:id="skillsLabel" 
+                      style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
             </VBox>
             
             <!-- Company -->
             <VBox spacing="10">
-                <Label text="Company:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="companyLabel" text=""/>
+                <Label text="Company:" 
+                      style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+                <Label fx:id="companyLabel" 
+                      style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
             </VBox>
         </VBox>
     </VBox>

@@ -5,53 +5,96 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.shape.Rectangle?>
 
 <HBox prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EmployerDashboardController">
 
     <!-- Left Sidebar -->
-    <VBox prefWidth="200" spacing="20" style="-fx-background-color: #f0f0f0;">
+    <VBox prefWidth="200" spacing="0" style="-fx-background-color: #333333;">
         <padding>
-            <Insets bottom="10" left="10" right="10" top="10" />
+            <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
 
+        <!-- Spacer at the top -->
+        <Region VBox.vgrow="ALWAYS"/>
+
         <!-- Profile Button -->
-        <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Profile" />
+        <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                       -fx-border-radius: 20; -fx-background-radius: 20; 
+                       -fx-font-weight: bold;" 
+                text="Profile" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Manage Vacancies Button -->
-        <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Manage Vacancies" />
+        <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: transparent; -fx-border-color: white; 
+                       -fx-text-fill: white; -fx-border-radius: 20; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="Manage Vacancies" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- View Companies Button -->
-        <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="View Companies" />
+        <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: transparent; -fx-border-color: white; 
+                       -fx-text-fill: white; -fx-border-radius: 20; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="View Companies" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Logout Button -->
-        <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold;                         -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Logout" />
+        <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ff4c4c; -fx-text-fill: white; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="Logout" />
+
+        <!-- Spacer at the bottom -->
+        <Region VBox.vgrow="ALWAYS"/>
     </VBox>
 
     <!-- Main Content Area -->
-    <VBox spacing="20" style="-fx-padding: 20px; -fx-background-color: white;" HBox.hgrow="ALWAYS">
+    <VBox spacing="20" style="-fx-padding: 40; -fx-background-color: white;" HBox.hgrow="ALWAYS">
         <!-- Banner -->
-        <Rectangle fx:id="banner" fill="rgb(211,211,211)" height="150" width="600" />
+        <Rectangle fx:id="banner" fill="#D1AA5A" height="100" width="600" arcHeight="20" arcWidth="20"/>
 
         <!-- Profile Section -->
         <HBox spacing="20">
-            <Rectangle fx:id="profilePicture" fill="rgb(128,128,128)" height="100" width="100" />
+            <Rectangle fx:id="profilePicture" fill="#333333" height="100" width="100" arcHeight="20" arcWidth="20"/>
             <VBox spacing="10">
-                <Label fx:id="nameLabel" style="-fx-font-size: 14;" text="Name: " />
-                <Label fx:id="emailLabel" style="-fx-font-size: 14;" text="Email: " />
-                <Label fx:id="usernameLabel" style="-fx-font-size: 14;" text="Username: " />
+                <Label fx:id="nameLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Name: " />
+                <Label fx:id="emailLabel" style="-fx-text-fill: #7E7E7E;" text="Email: " />
+                <Label fx:id="usernameLabel" style="-fx-text-fill: #7E7E7E;" text="Username: " />
             </VBox>
         </HBox>
 
         <!-- Company Information -->
-        <VBox spacing="10">
-            <Label style="-fx-font-weight: bold; -fx-font-size: 16;" text="Company Information" />
-            <Label fx:id="companyLabel" text="Company: " />
-            <HBox spacing="10">
-                <Button fx:id="addVacancyBtn" alignment="CENTER" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add Vacancy" />
-            </HBox>
+        <VBox spacing="15" style="-fx-background-color: #F7F7F7; -fx-padding: 20; -fx-background-radius: 15;">
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Company Information" />
+            <Label fx:id="companyLabel" style="-fx-text-fill: #7E7E7E;" text="Company: " />
+            
+            <VBox spacing="10">
+                <Button fx:id="addVacancyBtn" alignment="CENTER" prefWidth="150" 
+                        style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                               -fx-background-radius: 20; -fx-font-weight: bold;" 
+                        text="Add Vacancy" />
+                
+                <Button fx:id="GiveEndorsementsBtn" prefWidth="150" 
+                        style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                               -fx-background-radius: 20; -fx-font-weight: bold;" 
+                        text="Give Endorsments" />
+                
+                <Button fx:id="ViewEndorsementsBtn11" prefWidth="150" 
+                        style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                               -fx-background-radius: 20; -fx-font-weight: bold;" 
+                        text="ViewEndorsements" />
+            </VBox>
         </VBox>
-      <Button fx:id="GiveEndorsementsBtn" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Give Endorsments" />
-      <Button fx:id="ViewEndorsementsBtn11" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="ViewEndorsements" />
     </VBox>
 </HBox>

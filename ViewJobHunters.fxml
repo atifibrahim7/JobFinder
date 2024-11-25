@@ -6,48 +6,83 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <HBox prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" 
 fx:controller="application.ViewJobHuntersController">
 
     <!-- Left Sidebar -->
-    <VBox prefWidth="200" spacing="20" style="-fx-background-color: #f0f0f0;">
+    <VBox prefWidth="200" spacing="0" style="-fx-background-color: #333333;">
         <padding>
-            <Insets bottom="10" left="10" right="10" top="10" />
+            <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
 
+        <!-- Spacer at the top -->
+        <Region VBox.vgrow="ALWAYS"/>
+
         <!-- Profile Button -->
-        <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Profile" />
+        <Button fx:id="profileBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #D1AA5A; -fx-text-fill: white; 
+                       -fx-border-radius: 20; -fx-background-radius: 20; 
+                       -fx-font-weight: bold;" 
+                text="Profile" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Manage Vacancies Button -->
-        <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Manage Vacancies" />
+        <Button fx:id="manageVacanciesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: transparent; -fx-border-color: white; 
+                       -fx-text-fill: white; -fx-border-radius: 20; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="Manage Vacancies" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- View Companies Button -->
-        <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ffffff; -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="View Companies" />
+        <Button fx:id="viewCompaniesBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: transparent; -fx-border-color: white; 
+                       -fx-text-fill: white; -fx-border-radius: 20; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="View Companies" />
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Logout Button -->
-        <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" style="-fx-background-color: #ff4c4c; -fx-text-fill: #ffffff; -fx-font-weight: bold;                         -fx-shape: 'M 0 0 L 1 0 L 1 1 L 0 1 Z';" text="Logout" />
+        <Button fx:id="logoutBtn" prefHeight="50" prefWidth="160" 
+                style="-fx-background-color: #ff4c4c; -fx-text-fill: white; 
+                       -fx-background-radius: 20; -fx-font-weight: bold;" 
+                text="Logout" />
+
+        <!-- Spacer at the bottom -->
+        <Region VBox.vgrow="ALWAYS"/>
     </VBox>
 
     <!-- Main Content Area -->
-    <VBox spacing="20" style="-fx-padding: 20px; -fx-background-color: white;" HBox.hgrow="ALWAYS">
-
+    <VBox spacing="20" style="-fx-padding: 40; -fx-background-color: white;" HBox.hgrow="ALWAYS">
         <!-- Profile Section -->
         <HBox spacing="20">
             <VBox spacing="10" />
         </HBox>
-      <TextField fx:id="searchField" promptText="Search JobHunters" />
+
+        <!-- Search Field -->
+        <TextField fx:id="searchField" promptText="Search JobHunters" 
+                  style="-fx-background-radius: 20; -fx-padding: 10 15; 
+                         -fx-background-color: #F7F7F7; -fx-font-size: 14;" />
 
         <!-- Company Information -->
         <VBox spacing="10">
             <HBox spacing="10" />
         </VBox>
-      <ScrollPane fitToWidth="true"  VBox.vgrow="ALWAYS">
-         <content>
-            <VBox fx:id="jobHunterContainer" spacing="10" />
-            <!-- Companies will be added here dynamically -->
-            
-         </content>
-      </ScrollPane>
+
+        <!-- Scroll Pane Container -->
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox fx:id="jobHunterContainer" spacing="10" />
+                <!-- JobHunters will be added here dynamically -->
+            </content>
+        </ScrollPane>
     </VBox>
 </HBox>

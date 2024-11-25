@@ -4,14 +4,24 @@
 <?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/19"
-		
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="application.JobVacanciesController"
-      spacing="20" style="-fx-padding: 20;">
+      prefHeight="600.0" prefWidth="600.0"
+      style="-fx-background-color: white; -fx-padding: 20;">
     
-    <Label fx:id="companyLabel" text="" style="-fx-font-size: 24;"/>
+    <Label fx:id="companyLabel" text="" 
+           style="-fx-font-size: 24; -fx-font-weight: bold;"/>
     
-    <ListView fx:id="jobVacanciesListView" prefHeight="700" prefWidth="700"/>
+    <ListView fx:id="jobVacanciesListView" VBox.vgrow="ALWAYS"
+              style="-fx-background-radius: 10; -fx-border-radius: 10;
+                     -fx-background-color: white; -fx-border-color: #e0e0e0;">
+        <VBox.margin>
+            <Insets top="20" bottom="20"/>
+        </VBox.margin>
+    </ListView>
     
-    <Button text="Back" onAction="#goBack"/>
+    <Button text="Back" onAction="#goBack" 
+            prefWidth="100" prefHeight="40"
+            style="-fx-background-color: #D1AA5A; -fx-text-fill: white;
+                   -fx-background-radius: 20; -fx-font-weight: bold;"/>
 </VBox>
