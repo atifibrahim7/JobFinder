@@ -323,17 +323,6 @@ public List<String> getJobVacanciesByCompany(String companyName) {
         }
     }
     
-    public boolean isRecruiter(String username) {
-        String query = "SELECT * FROM recruiter WHERE username = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next(); // Returns true if recruiter exists, false if it doesn't
-        } catch (SQLException e) {
-            System.err.println("Error: Unable to check profile for username: " + username);
-            return false; // Return false in case of database errors
-        }
-    }
     public boolean isResume(String username)
     {
     	String query = "SELECT * FROM Resume WHERE username = ?";
