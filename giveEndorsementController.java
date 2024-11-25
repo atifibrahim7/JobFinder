@@ -166,7 +166,15 @@ public class giveEndorsementController {
 
     @FXML
     private void handleCancel() {
-        closeWindow();
+    	try {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewJobHunters.fxml"));
+        Scene loginScene = new Scene(loader.load());
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+        stage.setScene(loginScene);
+    } catch (IOException e) {
+        e.printStackTrace();
+        showAlert("Error", "Failed to logout");
+    }
     }
 
     private void closeWindow() {
