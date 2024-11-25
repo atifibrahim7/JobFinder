@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
 import java.sql.*;
@@ -175,6 +177,7 @@ public class Controller {
         String password = passwordField.getText();
         String name;
         String email;
+
         if (db.isProfile(username)) {
             Map<String, String> user = db.verify(username, password);
             if (user != null) {
@@ -182,32 +185,46 @@ public class Controller {
                 curr_type = user.get("type");
                 name = user.get("name");
                 email = user.get("email");
-                System.out.println("Login successful! Welcome, " + curr_user + " [" + curr_type + "]");
+                
+                showAlert(AlertType.INFORMATION, 
+                    "Login Successful", 
+                    "Welcome, " + curr_user + " [" + curr_type + "]"
+                );
+
                 UserSession.currentUsername = curr_user;
-                UserSession.currentRole = curr_type ; 
-                System.out.println(  UserSession.currentRole );
-                if("JobHunter".equals(UserSession.currentRole)) {
-                	Current_JH = new job_hunter(name,curr_user,email,password);
-                	goToAccount();
+                UserSession.currentRole = curr_type;
+
+                if ("JobHunter".equals(UserSession.currentRole)) {
+                    Current_JH = new job_hunter(name, curr_user, email, password);
+                    goToAccount();
+                } else if ("Employer".equals(UserSession.currentRole)) {
+                    Current_E = new employer(name, curr_user, email, password);
+                    goToEmployerDashboard();
+                } else if ("Recruiter".equals(UserSession.currentRole)) {
+                    Current_R = new Recruiter(name, curr_user, email, password);
+                    goToRecruiterAccount();
                 }
-                else if("Employer".equals(UserSession.currentRole)){
-                	Current_E = new employer(name,curr_user,email,password);
-                	goToEmployerDashboard();
-                }
-                else if("Recruiter".equals(UserSession.currentRole)){
-                	Current_R = new Recruiter(name,curr_user,email,password);
-                	System.out.println("Recruiter created!!");
-                	goToRecruiterAccount();
-                }
-  
             } else {
-                System.out.println("Invalid username or password.");
+                showAlert(AlertType.ERROR, 
+                    "Login Error", 
+                    "Invalid username or password."
+                );
             }
         } else {
-            System.out.println("No profile found with the provided username.");
+            showAlert(AlertType.ERROR, 
+                "Profile Not Found", 
+                "No profile found with the provided username."
+            );
         }
     }
-
+    
+    private void showAlert(AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
     //registration 
     @FXML
     private TextField jhnameField, jhusernameField, jhemailField , companyField;
@@ -223,19 +240,26 @@ public class Controller {
         String name = jhnameField.getText();
 
         if (db.isProfile(username)) {
-            System.out.println("Profile already exists. Please login instead.");
+            showAlert(AlertType.WARNING, 
+                "Registration Error", 
+                "Profile already exists. Please login instead."
+            );
             return;
         }
         
-    	Current_JH = new job_hunter(name,username,email,password);
+        Current_JH = new job_hunter(name, username, email, password);
         db.addProfile(username, name, email, password, "JobHunter");
         db.add_jobhunter(name, username, password, email);
         curr_user = username;
         curr_type = "JobHunter";
-        System.out.println("Registration successful! Welcome, " + curr_user);
-        UserSession.currentRole = curr_type ; 
-        UserSession.currentUsername = curr_user ;
-        // After successful registration, redirect to login or home page
+        
+        showAlert(AlertType.INFORMATION, 
+            "Registration Successful", 
+            "Welcome, " + curr_user
+        );
+        
+        UserSession.currentRole = curr_type;
+        UserSession.currentUsername = curr_user;
         goToResumeBuilder();
     }
     
@@ -313,6 +337,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
     public void register_employer() {
         String username = jhusernameField.getText().trim();
         String password = jhpasswordField.getText().trim();
@@ -321,40 +346,58 @@ public class Controller {
         String company_name = companyField.getText().trim();
 
         if (db.isProfile(username)) {
-            System.out.println("Profile already exists. Please log in.");
+            showAlert(AlertType.WARNING, 
+                "Registration Error", 
+                "Profile already exists. Please log in."
+            );
             return;
         }
 
         if (!db.isCompany(company_name)) {
-            System.out.println("Company does not exist. Please register the company first.");
+            showAlert(AlertType.ERROR, 
+                "Company Error", 
+                "Company does not exist. Please register the company first."
+            );
             return;
         }
 
         db.addProfile(username, name, email, password, "Employer");
         db.add_employer(name, username, password, email, company_name);
-
         curr_user = username;
-        curr_type = "Employer";  
+        curr_type = "Employer";
 
-        System.out.println("Registration successful. Welcome, " + name + "!");
+        showAlert(AlertType.INFORMATION, 
+            "Registration Successful", 
+            "Welcome, " + name + "!"
+        );
+        
         goToLogin();
     }
-    public void register_recruiter()
-    {
-        String username =jhusernameField.getText().trim();;
-        String password=jhpasswordField.getText().trim();;
-        String email=jhemailField.getText().trim();;
-        String name=jhnameField.getText().trim();;
-        if(db.isProfile(username))
-        {
-            //profile already exists login?
-        	return;
+
+    public void register_recruiter() {
+        String username = jhusernameField.getText().trim();
+        String password = jhpasswordField.getText().trim();
+        String email = jhemailField.getText().trim();
+        String name = jhnameField.getText().trim();
+
+        if (db.isProfile(username)) {
+            showAlert(AlertType.WARNING, 
+                "Registration Error", 
+                "Profile already exists. Please log in."
+            );
+            return;
         }
-        db.addProfile(username,name,email,password,"Recruiter");
+
+        db.addProfile(username, name, email, password, "Recruiter");
         db.add_recruiter(name, username, password, email);
         curr_user = username;
         curr_type = "Recruiter";
-        System.out.println("Registration successful. Welcome, " + name + "!");
+
+        showAlert(AlertType.INFORMATION, 
+            "Registration Successful", 
+            "Welcome, " + name + "!"
+        );
+        
         goToLogin();
     }
 
