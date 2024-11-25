@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -23,6 +26,8 @@ public class AddVacancyController {
     @FXML private TextArea detailsField;
     @FXML private TextArea requirementsField;
     @FXML private TextField locationField;
+    @FXML private TextField Recruiterusernamefield;	//newly added 
+    @FXML private TextField TitleField;//newly added
     @FXML private DatePicker deadlinePicker;
     
     // Updated sidebar buttons to match new FXML
@@ -78,10 +83,19 @@ public class AddVacancyController {
     @FXML
     private void handleSubmit() {
         if (validateInputs()) {
+            String recruiterUsername = Recruiterusernamefield.getText();
+            String title = TitleField.getText();
+            
+            // Check if the recruiter exists in the database
+            if (!Controller.db.isRecruiter(recruiterUsername)) {
+                showAlert("Error", "Invalid recruiter username. Please enter a valid recruiter username.");
+                return;
+            }
+            
             job_vacancy newVacancy = createVacancy();
             vacanciesList.add(newVacancy);
             
-            // Function call to save vacancy in database
+            // Function call to save vacancy in database with new parameters
             Controller.db.addVacancy(
                 companyString,
                 detailsField.getText(),
@@ -89,8 +103,11 @@ public class AddVacancyController {
                 locationField.getText(),
                 LocalDate.now().toString(),
                 deadlinePicker.getValue().toString(),
-                UserSession.currentUsername
+                recruiterUsername,
+                title
             );
+            
+            showSuccessAlert(); // Show success message
             navigateToProfile();
         }
     }
@@ -107,19 +124,26 @@ public class AddVacancyController {
         if (detailsField.getText().isEmpty() || 
             requirementsField.getText().isEmpty() || 
             locationField.getText().isEmpty() || 
-            deadlinePicker.getValue() == null) {
+            deadlinePicker.getValue() == null ||
+            TitleField.getText().isEmpty() ||     // Added validation for title
+            Recruiterusernamefield.getText().isEmpty()) {  // Added validation for recruiter username
             showAlert("Error", "All fields must be filled.");
             return false;
         }
-
 
         if (deadlinePicker.getValue().isBefore(LocalDate.now())) {
             showAlert("Error", "Deadline cannot be in the past.");
             return false;
         }
 
-
         return true;
+    }
+    private void showSuccessAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Vacancy has been successfully added!");
+        alert.showAndWait();
     }
 
 
@@ -218,6 +242,3 @@ public class AddVacancyController {
         alert.showAndWait();
     }
 }
-
-
-
