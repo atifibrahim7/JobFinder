@@ -1,15 +1,20 @@
 package application;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ManageVacanciesController {
     @FXML private TextField vacancyTitleField;
@@ -35,15 +40,15 @@ public class ManageVacanciesController {
     private void loadCompany() {
         try {
             ArrayList<String> employer_info = Controller.db.getUser(UserSession.currentUsername, UserSession.currentRole);
-            
+
             if (employer_info != null && !employer_info.isEmpty()) {
-            	
+
                  companyString = employer_info.get(4);
 
 
                 System.out.println("fetched company Details:");
                 System.out.println("Company: " + companyString);
-               
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +75,7 @@ public class ManageVacanciesController {
 	    try {
 	        List<String> vacancies = Controller.db.getVacanciesbyCompany( companyString);
 	        jobHunterContainer.getChildren().clear();
-	        
+
 	        for (String vacancyInfo : vacancies) {
 	            VBox vacancyBox = createVacancyBox(vacancyInfo);
 	            jobHunterContainer.getChildren().add(vacancyBox);
@@ -86,7 +91,7 @@ public class ManageVacanciesController {
 	    VBox box = new VBox(10);
 	    box.setStyle("-fx-background-color: white; -fx-padding: 15px; -fx-border-color: #cccccc; " +
 	                 "-fx-border-radius: 5px; -fx-background-radius: 5px;");
-	    
+
 	    String[] lines = vacancyInfo.split("\n");
 	    for (String line : lines) {
 	        Label label = new Label(line);
@@ -95,20 +100,20 @@ public class ManageVacanciesController {
 	        }
 	        box.getChildren().add(label);
 	    }
-	    
+
 	    // Add hover effect
-	    box.setOnMouseEntered(e -> 
+	    box.setOnMouseEntered(e ->
 	        box.setStyle(box.getStyle() + "-fx-background-color: #f5f5f5;"));
-	    box.setOnMouseExited(e -> 
+	    box.setOnMouseExited(e ->
 	        box.setStyle(box.getStyle() + "-fx-background-color: white;"));
-	    
+
 	    // Add click event
 	    box.setOnMouseClicked(event -> handleVacancyClick(lines[0].substring(7))); // Get title from first line
-	    
+
 	    return box;
 	}
 
-    
+
 
     private void setupSearch() {
         searchField1.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -124,7 +129,7 @@ public class ManageVacanciesController {
         try {
             List<String> allVacancies = Controller.db.getVacanciesbyCompany(companyString);
             jobHunterContainer.getChildren().clear();
-            
+
             for (String vacancyInfo : allVacancies) {
                 if (vacancyInfo.toLowerCase().contains(searchText)) {
                     VBox vacancyBox = createVacancyBox(vacancyInfo);
@@ -151,7 +156,7 @@ public class ManageVacanciesController {
             AddVacancyController controller = loader.getController();
             controller.setRecruiter(currentRecruiter);
             controller.setCompany(company);
-            
+
             Stage stage = (Stage) addVacancyBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
@@ -205,7 +210,7 @@ public class ManageVacanciesController {
 
     private void navigateToProfile() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployerDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/EmployerDashboard.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) profileBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -217,7 +222,7 @@ public class ManageVacanciesController {
 
     private void navigateToViewCompanies() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -229,7 +234,7 @@ public class ManageVacanciesController {
 
     private void handleLogout() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("userInterface/Login.fxml"));
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {

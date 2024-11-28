@@ -1,18 +1,16 @@
 package application;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-import java.sql.*;
+import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            HBox root = FXMLLoader.load(getClass().getResource("userInterface/login.fxml"));
             Scene scene = new Scene(root, 800, 800);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login Page");

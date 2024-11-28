@@ -1,35 +1,31 @@
 package application;
-import javafx.application.Application;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 
 public class AddVacancyController {
     @FXML private TextArea detailsField;
     @FXML private TextArea requirementsField;
     @FXML private TextField locationField;
-    @FXML private TextField Recruiterusernamefield;	//newly added 
+    @FXML private TextField Recruiterusernamefield;	//newly added
     @FXML private TextField TitleField;//newly added
     @FXML private DatePicker deadlinePicker;
-    
+
     // Updated sidebar buttons to match new FXML
     @FXML private Button profileBtn;
     @FXML private Button manageVacanciesBtn;
@@ -52,15 +48,15 @@ public class AddVacancyController {
     private void loadEmployerData() {
         try {
             ArrayList<String> employer_info = Controller.db.getUser(UserSession.currentUsername, UserSession.currentRole);
-            
+
             if (employer_info != null && !employer_info.isEmpty()) {
-            	
+
                  companyString = employer_info.get(4);
 
 
                 System.out.println("fetched company Details:");
                 System.out.println("Company: " + companyString);
-               
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,16 +81,16 @@ public class AddVacancyController {
         if (validateInputs()) {
             String recruiterUsername = Recruiterusernamefield.getText();
             String title = TitleField.getText();
-            
+
             // Check if the recruiter exists in the database
             if (!Controller.db.isRecruiter(recruiterUsername)) {
                 showAlert("Error", "Invalid recruiter username. Please enter a valid recruiter username.");
                 return;
             }
-            
+
             job_vacancy newVacancy = createVacancy();
             vacanciesList.add(newVacancy);
-            
+
             // Function call to save vacancy in database with new parameters
             Controller.db.addVacancy(
                 companyString,
@@ -106,12 +102,12 @@ public class AddVacancyController {
                 recruiterUsername,
                 title
             );
-            
+
             showSuccessAlert(); // Show success message
             navigateToProfile();
         }
     }
-    
+
 
 
     @FXML
@@ -121,9 +117,9 @@ public class AddVacancyController {
 
 
     private boolean validateInputs() {
-        if (detailsField.getText().isEmpty() || 
-            requirementsField.getText().isEmpty() || 
-            locationField.getText().isEmpty() || 
+        if (detailsField.getText().isEmpty() ||
+            requirementsField.getText().isEmpty() ||
+            locationField.getText().isEmpty() ||
             deadlinePicker.getValue() == null ||
             TitleField.getText().isEmpty() ||     // Added validation for title
             Recruiterusernamefield.getText().isEmpty()) {  // Added validation for recruiter username
@@ -149,7 +145,7 @@ public class AddVacancyController {
 
     private job_vacancy createVacancy() {
         job_vacancy vacancy = new job_vacancy();
-        
+
         // Set vacancy properties
         vacancy.company = this.company;
         vacancy.details = detailsField.getText();
@@ -187,7 +183,7 @@ public class AddVacancyController {
 
     private void navigateToManageVacancies() {
     	try {
-            HBox root = FXMLLoader.load(getClass().getResource("ManageVacancy.fxml"));
+            HBox root = FXMLLoader.load(getClass().getResource("userInterface/ManageVacancy.fxml"));
             Scene scene = new Scene(root, 800, 800);
             Stage stage = (Stage) manageVacanciesBtn.getScene().getWindow();
             stage.setScene(scene);
@@ -201,7 +197,7 @@ public class AddVacancyController {
 
     private void navigateToProfile() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("employerDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/employerDashboard.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -213,7 +209,7 @@ public class AddVacancyController {
 
     private void navigateToViewCompanies() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -225,7 +221,7 @@ public class AddVacancyController {
 
     private void handleLogout() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("userInterface/login.fxml"));
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {

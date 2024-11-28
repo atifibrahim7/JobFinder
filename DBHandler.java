@@ -1,26 +1,24 @@
 package application;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 class DBHandler {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "abbasi123";
 
     private Connection conn;
-    
+
     private static DBHandler instance;
 
     // Constructor to establish the connection
@@ -33,7 +31,7 @@ class DBHandler {
             System.exit(1); // Terminate the program on connection failure
         }
     }
-    
+
 
     public static DBHandler getInstance() {
         if (instance == null) {
@@ -58,27 +56,27 @@ class DBHandler {
             while (resultSet.next()) {
                 System.out.println("Query Result: " + resultSet.getInt(1));
             }
-            
-           
+
+
         } catch (Exception e) {
             System.out.println("Connection failed: " + e.getMessage());
 
         }
     }
-    
-    
+
+
     public void addEndorsement(String jobHunterUsername, String endorserUsername, String description) {
         String query = "INSERT INTO Endorsements (job_hunter_username, endorser_username, description, date_endorsed) " +
                       "VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             // Get current date
             java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
-           
+
             pstmt.setString(1, jobHunterUsername);
             pstmt.setString(2, endorserUsername);
             pstmt.setString(3, description);
             pstmt.setDate(4, currentDate);
-           
+
             pstmt.executeUpdate();
             System.out.println("Endorsement added successfully.");
         } catch (SQLException e) {
@@ -87,15 +85,15 @@ class DBHandler {
             throw new RuntimeException("Failed to add endorsement", e);
         }
     }
-   
+
     public ArrayList<Endorsement> getEndorsementsByEndorser(String endorserUsername) {
         ArrayList<Endorsement> endorsements = new ArrayList<>();
         String query = "SELECT * FROM Endorsements WHERE endorser_username = ?";
-       
+
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, endorserUsername);
             ResultSet rs = pstmt.executeQuery();
-           
+
             while (rs.next()) {
                 Endorsement endorsement = new Endorsement(
                     rs.getString("job_hunter_username"),
@@ -110,11 +108,11 @@ class DBHandler {
             e.printStackTrace();
             throw new RuntimeException("Failed to fetch endorsements", e);
         }
-       
+
         return endorsements;
     }
 
-    
+
     public void update_application(String new_status,String vacancy_title, String username)
     {
     	String query = "UPDATE application SET status = ? WHERE vacancy_title = ? AND applicant_username = ?";
@@ -129,7 +127,7 @@ class DBHandler {
             e.printStackTrace(); // Print the stack trace for debugging
         }
     }
-    
+
     public ArrayList<ArrayList<String>> getJHApplications(String JHusername)
     {
     	String query = "select company,requirements,jobvacancy.vacancy_title,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title where application.applicant_username = ?";
@@ -152,7 +150,7 @@ class DBHandler {
         return applications;
 
     }
-    
+
     public ArrayList<ArrayList<String>> getApplications(String username)
     {
     	String query = "select company,requirements,jobvacancy.vacancy_title,applicant_username,status from jobvacancy join application on jobvacancy.vacancy_title = application.vacancy_title "
@@ -201,7 +199,7 @@ class DBHandler {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, vacancyTitle);
             ResultSet rs = pstmt.executeQuery();
-            
+
             if (rs.next()) {
                 return new JobVacancyDetails(
                     rs.getString("vacancy_title"),
@@ -228,9 +226,9 @@ class DBHandler {
         public final Date deadline;
         public final String details;
         public final String requirements;
-        
-        public JobVacancyDetails(String title, String company, String location, 
-                               Date datePosted, Date deadline, String details, 
+
+        public JobVacancyDetails(String title, String company, String location,
+                               Date datePosted, Date deadline, String details,
                                String requirements) {
             this.title = title;
             this.company = company;
@@ -261,38 +259,38 @@ class DBHandler {
 
     public ArrayList<ArrayList<String>> getAllCompanies() {
         ArrayList<ArrayList<String>> companies = new ArrayList<>();
-        
-        String query = "SELECT * FROM company";        
+
+        String query = "SELECT * FROM company";
           try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 ArrayList<String> companyInfo = new ArrayList<>();
                 companyInfo.add(rs.getString("name"));
                 companyInfo.add(rs.getString("address"));
                 companyInfo.add(rs.getString("email"));
-                
+
                 companies.add(companyInfo);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error retrieving companies: " + e.getMessage());
         }
-        
+
         return companies;
     }
 
-    
+
     public List<String> getVacanciesbyCompany(String companyString) {
         List<String> vacancies = new ArrayList<>();
         String query = "SELECT * FROM JobVacancy WHERE company = ?";
-        
+
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, companyString);
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 String vacancyInfo = String.format("Title: %s\n" +
                                                  "Details: %s\n" +
@@ -343,8 +341,8 @@ class DBHandler {
             return false;
         }
     }
-    
-    
+
+
 public List<String> getJobVacanciesByCompany(String companyName) {
     List<String> jobVacancies = new ArrayList<>();
     String query = "SELECT vacancy_title FROM JobVacancy WHERE company = (SELECT name FROM Company WHERE name = ?)";
@@ -393,7 +391,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             return false; // Return false in case of database errors
         }
     }
-    
+
     public boolean isResume(String username)
     {
     	String query = "SELECT * FROM Resume WHERE username = ?";
@@ -465,10 +463,10 @@ public List<String> getJobVacanciesByCompany(String companyName) {
          } catch (SQLException e) {
              System.err.println("Error: Unable to add Resume for username: " + username);
          }
-    	
+
     }
-    
-    public void addVacancy(String company, String details, String requirements, String location, 
+
+    public void addVacancy(String company, String details, String requirements, String location,
             String datePosted, String deadline, String recruiter, String title) {
         String query = "INSERT INTO JobVacancy (company, details, requirements, location, date_posted, deadline, recruiter_username, vacancy_title) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -503,7 +501,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
             System.out.println("Executing query: " + query);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     int columnCount = rs.getMetaData().getColumnCount(); // Get number of columns
@@ -519,7 +517,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
         }
         return userInfo;
     }
-    
+
     public ArrayList<String> getUser(String username, String type) {
         // Validate the table name to avoid SQL injection
         String query = "SELECT * FROM " + type + " WHERE username = ?";
@@ -527,7 +525,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, username);
             System.out.println("Executing query: " + query);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     int columnCount = rs.getMetaData().getColumnCount(); // Get number of columns
@@ -541,11 +539,11 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             e.printStackTrace();
             return null;
         }
-        
+
         return userInfo;
     }
 
-    
+
     public void add_jobhunter(String name,String username,String password,String email)
     {
     	String query = "INSERT INTO JobHunter (username, name, email, password) VALUES (?, ?, ?, ?)";
@@ -580,7 +578,7 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             pstmt.setString(2, name);
             pstmt.setString(3, email);
             pstmt.setString(4, password);
-            pstmt.setString(5, company); 
+            pstmt.setString(5, company);
             pstmt.executeUpdate();
             System.out.println("Employer added successfully.");
         } catch (SQLException e) {
@@ -600,8 +598,8 @@ public List<String> getJobVacanciesByCompany(String companyName) {
             System.err.println("Error: Unable to delete profile for username: " + username);
         }
     }
-    
-    
+
+
     // Close the connection
     public void close() {
         try {

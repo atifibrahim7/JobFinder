@@ -1,17 +1,16 @@
 package application;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.shape.Rectangle;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class EmployerDashboardController {
 
@@ -37,7 +36,7 @@ public class EmployerDashboardController {
     private Rectangle banner;
     @FXML
     private Rectangle profilePicture;
-    
+
     @FXML
     private Label nameLabel;
     @FXML
@@ -56,13 +55,13 @@ public class EmployerDashboardController {
     private void loadEmployerData() {
         try {
             ArrayList<String> employer_info = Controller.db.getUser(UserSession.currentUsername, UserSession.currentRole);
-            
+
             if (employer_info != null && !employer_info.isEmpty()) {
                 String username = employer_info.get(0);
                 String name = employer_info.get(1);
                 String email = employer_info.get(2);
                 String company = employer_info.get(4);
-                
+
                 nameLabel.setText("Name: " + name);
                 emailLabel.setText("Email: " + email);
                 usernameLabel.setText("Username: " + username);
@@ -84,7 +83,7 @@ public class EmployerDashboardController {
     }
     private void goToViewEndorsements() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewEndorsements.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewEndorsements.fxml"));
             Scene viewEndorsementsScene = new Scene(loader.load());
             Stage stage = (Stage) ViewEndorsementsBtn11.getScene().getWindow();
             stage.setScene(viewEndorsementsScene);
@@ -95,7 +94,7 @@ public class EmployerDashboardController {
     }
     private void handleLogout() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -105,7 +104,7 @@ public class EmployerDashboardController {
     }
     private void handleGotoEndorsment() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewJobHunters.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewJobHunters.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -121,7 +120,7 @@ public class EmployerDashboardController {
 
     private void handleAddVacancy() {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("AddVacancy.fxml"));
+            HBox root = FXMLLoader.load(getClass().getResource("userInterface/AddVacancy.fxml"));
             Scene scene = new Scene(root, 800, 800);
             Stage stage = (Stage) addVacancyBtn.getScene().getWindow();
             stage.setScene(scene);
@@ -134,7 +133,7 @@ public class EmployerDashboardController {
 
     private void handleManageVacancies() {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("ManageVacancy.fxml"));
+            HBox root = FXMLLoader.load(getClass().getResource("userInterface/ManageVacancy.fxml"));
             Scene scene = new Scene(root, 800, 800);
             Stage stage = (Stage) manageVacanciesBtn.getScene().getWindow();
             stage.setScene(scene);
@@ -146,7 +145,7 @@ public class EmployerDashboardController {
     }
     private void handleViewCompanies() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -154,6 +153,6 @@ public class EmployerDashboardController {
             e.printStackTrace();
         }
     }
-    
-    
+
+
 }

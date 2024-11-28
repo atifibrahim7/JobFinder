@@ -1,19 +1,20 @@
 package application;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.geometry.Insets;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class JobhunterApplicationsController implements Initializable {
     @FXML private Button profileBtn;
@@ -49,7 +50,7 @@ public class JobhunterApplicationsController implements Initializable {
             app.companyName = appData.get(0);
             app.requirements = appData.get(1);
             app.vacancyTitle = appData.get(2);
-            app.status = appData.get(3); 
+            app.status = appData.get(3);
             applications.add(app);
             System.out.println(app);
         }
@@ -97,7 +98,7 @@ public class JobhunterApplicationsController implements Initializable {
     }
 
     private void handleProfile() {
-    	String path = "account1.fxml";
+    	String path = "userInterface/account1.fxml";
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Scene profileScene = new Scene(loader.load());
@@ -109,16 +110,16 @@ public class JobhunterApplicationsController implements Initializable {
     }
 
     private void handlePendingApplications() {
-        navigateTo("PendingApplications.fxml");
+        navigateTo("userInterface/PendingApplications.fxml");
     }
 
     private void handleJobVacancies() {
-        navigateTo("JobVacancies.fxml");
+        navigateTo("userInterface/JobVacancies.fxml");
     }
 
     private void handleViewCompanies() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -129,7 +130,7 @@ public class JobhunterApplicationsController implements Initializable {
 
     private void handleLogout() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);

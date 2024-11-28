@@ -1,24 +1,17 @@
 package application;
 
-import java.time.chrono.AbstractChronology;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.Map;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-
-import java.io.*;
-import java.sql.*;
-import java.util.List;
-import java.util.Map;
-import javafx.scene.Scene;
-import javafx.stage.*;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 class Resume{
     protected String education;
@@ -114,7 +107,7 @@ class employer extends profile{
         this.username=username;
         this.email=email;
         this.password=password;
-        
+
     }
 }
 
@@ -140,7 +133,7 @@ class application
    	Controller.db.update_application(newStatus,vacancyTitle,username);
    }
 }
-	
+
 
 class job_vacancy
 {
@@ -156,11 +149,11 @@ class job_vacancy
 
 
 public class Controller {
-	
+
 	public static job_hunter Current_JH;
-	public static Recruiter Current_R; 
+	public static Recruiter Current_R;
 	public static employer Current_E;
-	
+
 
 	//login
 	@FXML
@@ -185,9 +178,9 @@ public class Controller {
                 curr_type = user.get("type");
                 name = user.get("name");
                 email = user.get("email");
-                
-                showAlert(AlertType.INFORMATION, 
-                    "Login Successful", 
+
+                showAlert(AlertType.INFORMATION,
+                    "Login Successful",
                     "Welcome, " + curr_user + " [" + curr_type + "]"
                 );
 
@@ -205,19 +198,19 @@ public class Controller {
                     goToRecruiterAccount();
                 }
             } else {
-                showAlert(AlertType.ERROR, 
-                    "Login Error", 
+                showAlert(AlertType.ERROR,
+                    "Login Error",
                     "Invalid username or password."
                 );
             }
         } else {
-            showAlert(AlertType.ERROR, 
-                "Profile Not Found", 
+            showAlert(AlertType.ERROR,
+                "Profile Not Found",
                 "No profile found with the provided username."
             );
         }
     }
-    
+
     private void showAlert(AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -225,7 +218,7 @@ public class Controller {
         alert.setContentText(content);
         alert.showAndWait();
     }
-    //registration 
+    //registration
     @FXML
     private TextField jhnameField, jhusernameField, jhemailField , companyField;
 
@@ -240,48 +233,48 @@ public class Controller {
         String name = jhnameField.getText();
 
         if (db.isProfile(username)) {
-            showAlert(AlertType.WARNING, 
-                "Registration Error", 
+            showAlert(AlertType.WARNING,
+                "Registration Error",
                 "Profile already exists. Please login instead."
             );
             return;
         }
-        
+
         Current_JH = new job_hunter(name, username, email, password);
         db.addProfile(username, name, email, password, "JobHunter");
         db.add_jobhunter(name, username, password, email);
         curr_user = username;
         curr_type = "JobHunter";
-        
-        showAlert(AlertType.INFORMATION, 
-            "Registration Successful", 
+
+        showAlert(AlertType.INFORMATION,
+            "Registration Successful",
             "Welcome, " + curr_user
         );
-        
+
         UserSession.currentRole = curr_type;
         UserSession.currentUsername = curr_user;
         goToResumeBuilder();
     }
-    
+
     @FXML
     public void goToEmployerDashboard()
     {
     	try {
-    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("employerDashboard.fxml"));
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/employerDashboard.fxml"));
              Scene accountScene = new Scene(loader.load());
              Stage stage = (Stage) usernameField.getScene().getWindow();
              stage.setScene(accountScene);
     	} catch (IOException e ) {
     		e.printStackTrace();
-    	} 	
+    	}
     }
-    
+
     @FXML
     public void goToRecruiterAccount()
     {
     	System.out.println("Loading Recruiter Account");
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("recruiteraccount.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/recruiteraccount.fxml"));
             Scene RecruiterAccountScene = new Scene(loader.load());
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(RecruiterAccountScene);
@@ -289,11 +282,11 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     public void goToResumeBuilder() {
     	  try {
-              FXMLLoader loader = new FXMLLoader(getClass().getResource("ResumeBuilder.fxml"));
+              FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ResumeBuilder.fxml"));
               Scene ResumeScene = new Scene(loader.load());
               Stage stage = (Stage) jhusernameField.getScene().getWindow();
               stage.setScene(ResumeScene);
@@ -301,11 +294,11 @@ public class Controller {
               e.printStackTrace();
           }
     }
-    
+
     @FXML
     public void goToLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) jhusernameField.getScene().getWindow();
             stage.setScene(loginScene);
@@ -317,19 +310,19 @@ public class Controller {
     public void goToAccount() {
     	try {
     		System.out.println("Controller.goToAccount()");
-    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("account1.fxml"));
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/account1.fxml"));
              Scene accountScene = new Scene(loader.load());
              Stage stage = (Stage) usernameField.getScene().getWindow();
              stage.setScene(accountScene);
-    		
+
     	} catch (IOException e ) {
     		e.printStackTrace();
-    	} 	
+    	}
     }
     @FXML
     public void goToRegister() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("registerJH.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/registerJH.fxml"));
             Scene registerScene = new Scene(loader.load());
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(registerScene);
@@ -346,16 +339,16 @@ public class Controller {
         String company_name = companyField.getText().trim();
 
         if (db.isProfile(username)) {
-            showAlert(AlertType.WARNING, 
-                "Registration Error", 
+            showAlert(AlertType.WARNING,
+                "Registration Error",
                 "Profile already exists. Please log in."
             );
             return;
         }
 
         if (!db.isCompany(company_name)) {
-            showAlert(AlertType.ERROR, 
-                "Company Error", 
+            showAlert(AlertType.ERROR,
+                "Company Error",
                 "Company does not exist. Please register the company first."
             );
             return;
@@ -366,11 +359,11 @@ public class Controller {
         curr_user = username;
         curr_type = "Employer";
 
-        showAlert(AlertType.INFORMATION, 
-            "Registration Successful", 
+        showAlert(AlertType.INFORMATION,
+            "Registration Successful",
             "Welcome, " + name + "!"
         );
-        
+
         goToLogin();
     }
 
@@ -381,8 +374,8 @@ public class Controller {
         String name = jhnameField.getText().trim();
 
         if (db.isProfile(username)) {
-            showAlert(AlertType.WARNING, 
-                "Registration Error", 
+            showAlert(AlertType.WARNING,
+                "Registration Error",
                 "Profile already exists. Please log in."
             );
             return;
@@ -393,11 +386,11 @@ public class Controller {
         curr_user = username;
         curr_type = "Recruiter";
 
-        showAlert(AlertType.INFORMATION, 
-            "Registration Successful", 
+        showAlert(AlertType.INFORMATION,
+            "Registration Successful",
             "Welcome, " + name + "!"
         );
-        
+
         goToLogin();
     }
 

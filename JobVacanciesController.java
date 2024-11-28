@@ -1,13 +1,14 @@
 package application;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.util.List;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 public class JobVacanciesController {
 
@@ -30,12 +31,12 @@ public class JobVacanciesController {
     }
     private void openJobDetails(String vacancyTitle) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("JobDetails.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/JobDetails.fxml"));
             Scene scene = new Scene(loader.load());
-            
+
             JobDetailsController controller = loader.getController();
             DBHandler.JobVacancyDetails details = Controller.db.getJobVacancyDetails(vacancyTitle);
-            
+
             if (details != null) {
                 controller.setJobDetails(
                     details.title,
@@ -46,7 +47,7 @@ public class JobVacanciesController {
                     details.details,
                     details.requirements
                 );
-                
+
                 Stage stage = (Stage) jobVacanciesListView.getScene().getWindow();
                 stage.setScene(scene);
             }
@@ -68,15 +69,15 @@ public class JobVacanciesController {
     private void goBack() {
     	try {
     		System.out.println("Controller.goBack()");
-    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+    		 FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
              Scene accountScene = new Scene(loader.load());
              Stage stage = (Stage) jobVacanciesListView.getScene().getWindow();
              stage.setScene(accountScene);
              //Controller.db.test();
-    		
+
     	} catch (IOException e ) {
     		e.printStackTrace();
     		   //Controller.db.test();
-    	} 	
+    	}
     }
 }

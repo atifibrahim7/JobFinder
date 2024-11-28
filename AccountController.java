@@ -1,5 +1,7 @@
 package application;
+import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,15 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class AccountController {
 
@@ -82,18 +76,18 @@ public class AccountController {
                 String company = user_info.get(4);         // Company (new data)
 
                 System.out.println(username + " " + name + " " + email);
-                
-                
+
+
                 String educationHistory = "No Current History";  // Education History (new data)
                 String pastExperience = "Not Current History";    // Past Experience (new data)
                 String skills = "Not Currenty Skills";          // Skills (new data)
-                
-                
+
+
                 // Populate user information
                 nameLabel.setText("Name: " + name);
                 emailLabel.setText("Email: " + email);
                 positionLabel.setText("Username: " + username);
-                
+
                 // Populate resume info
                 // Update your resume info labels with the data fetched from the backend
                 if(Controller.db.isResume(UserSession.currentUsername))
@@ -103,13 +97,14 @@ public class AccountController {
 	                pastExperience = resume_info.get(2);
 	                skills = resume_info.get(3);
                 }
-                
+
                 Label educationLabel = new Label("Education: " + educationHistory);
                 Label experienceLabel = new Label("Experience: " + pastExperience);
                 Label skillsLabel = new Label("Skills: " + skills);
 
-                if(company == null)
-                	company = "Not working for any";
+                if(company == null) {
+					company = "Not working for any";
+				}
                 Label companyLabel = new Label("Company: " + company);
                 resumeInfoBox.getChildren().clear();  // Clear previous contents (if any)
                 resumeInfoBox.getChildren().addAll(educationLabel, experienceLabel, skillsLabel, companyLabel);
@@ -125,7 +120,7 @@ public class AccountController {
 
     private void handleLogout() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -133,11 +128,11 @@ public class AccountController {
             e.printStackTrace();
         }
     }
-    
+
     // Dummy handler for "Pending Applications"
     private void handlePendingApplications() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("JobhunterApplications.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/JobhunterApplications.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);
@@ -155,7 +150,7 @@ public class AccountController {
     // Handler for View Companies
     private void handleViewCompanies() {
     	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(loginScene);

@@ -1,6 +1,8 @@
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class RecruiterProfileController {
 
@@ -98,7 +99,7 @@ public class RecruiterProfileController {
                 experienceLabel.setText(pastExperience);
                 skillsLabel.setText(skills);
 
-                
+
                 companyLabel.setText(company);
             }
         } catch (Exception e) {
@@ -112,7 +113,7 @@ public class RecruiterProfileController {
 
     private void handleViewCompanies() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene viewCompaniesScene = new Scene(loader.load());
             Stage stage = (Stage) viewCompaniesBtn.getScene().getWindow();
             stage.setScene(viewCompaniesScene);
@@ -123,7 +124,7 @@ public class RecruiterProfileController {
 
     private void handleManageApplication() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("recruiterApplication.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/recruiterApplication.fxml"));
             Scene manageVacanciesScene = new Scene(loader.load());
             Stage stage = (Stage) manageApplicationBtn.getScene().getWindow();
             stage.setScene(manageVacanciesScene);
@@ -134,7 +135,7 @@ public class RecruiterProfileController {
 
     private void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);

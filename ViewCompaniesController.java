@@ -1,14 +1,16 @@
 package application;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class ViewCompaniesController {
 
@@ -58,15 +60,15 @@ public class ViewCompaniesController {
         VBox box = new VBox(10);
         box.setStyle("-fx-background-color: white; -fx-padding: 15px; -fx-border-color: #cccccc; " +
                      "-fx-border-radius: 5px; -fx-background-radius: 5px;");
-        
+
         Label nameLabel = new Label(company.get(0));
         Label emailLabel = new Label("Email: " + company.get(1));
         Label descriptionLabel = new Label("Description: " + company.get(2));
-        
+
         nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-        
+
         box.getChildren().addAll(nameLabel, emailLabel, descriptionLabel);
-        
+
         // Add mouse click event to the company box
         box.setOnMouseClicked(event -> handleCompanyClick(company.get(0))); // Pass the company name
         return box;
@@ -75,7 +77,7 @@ public class ViewCompaniesController {
     // Navigate to job vacancies for the selected company
     private void handleCompanyClick(String companyName) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("JobVacancies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/JobVacancies.fxml"));
             Scene jobVacanciesScene = new Scene(loader.load());
             JobVacanciesController controller = loader.getController();
             controller.setCompanyName(companyName); // Pass the selected company name
@@ -109,12 +111,12 @@ public class ViewCompaniesController {
     }
 
     private void handleProfile() {
-        String path = "account1.fxml";
+        String path = "userInterface/account1.fxml";
         if ("Employer".equals(UserSession.currentRole)) {
-            path = "employerDashboard.fxml";
+            path = "userInterface/employerDashboard.fxml";
         }
         if ("Recruiter".equals(UserSession.currentRole)) {
-            path = "recruiteraccount.fxml";
+            path = "userInterface/recruiteraccount.fxml";
         }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
@@ -128,7 +130,7 @@ public class ViewCompaniesController {
 
     private void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/login.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
             stage.setScene(loginScene);

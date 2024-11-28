@@ -1,13 +1,17 @@
 package application;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class JobDetailsController {
     @FXML private Label titleLabel;
@@ -18,11 +22,11 @@ public class JobDetailsController {
     @FXML private TextArea detailsArea;
     @FXML private TextArea requirementsArea;
     @FXML private Button applyButton;
-    
+
     private String vacancyTitle;
-    
-    public void setJobDetails(String title, String company, String location, 
-                            Date datePosted, Date deadline, String details, 
+
+    public void setJobDetails(String title, String company, String location,
+                            Date datePosted, Date deadline, String details,
                             String requirements) {
         this.vacancyTitle = title;
         titleLabel.setText(title);
@@ -32,14 +36,14 @@ public class JobDetailsController {
         deadlineLabel.setText(deadline.toString());
         detailsArea.setText(details);
         requirementsArea.setText(requirements);
-        
+
         // Disable apply button if user is not a job hunter or if deadline has passed
-        if (Controller.Current_JH == null || 
+        if (Controller.Current_JH == null ||
             deadline.toLocalDate().isBefore(LocalDate.now())) {
             applyButton.setDisable(true);
         }
     }
-    
+
     @FXML
     private void handleApply() {
         if (Controller.Current_JH != null) {
@@ -57,18 +61,18 @@ public class JobDetailsController {
             }
         }
     }
-    
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
     }
-    
+
     @FXML
     private void goBack() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewCompanies.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/ViewCompanies.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) titleLabel.getScene().getWindow();
             stage.setScene(scene);

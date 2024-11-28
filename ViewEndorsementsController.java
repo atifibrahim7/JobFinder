@@ -1,16 +1,14 @@
 package application;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class ViewEndorsementsController {
 
@@ -40,9 +38,9 @@ public class ViewEndorsementsController {
             StringBuilder endorsementsText = new StringBuilder();
 
             for (Endorsement endorsement : endorsements) {
-                endorsementsText.append(String.format("%s: %s (Date: %s)\n", 
-                    endorsement.getJobHunterUsername(), 
-                    endorsement.getDescription(), 
+                endorsementsText.append(String.format("%s: %s (Date: %s)\n",
+                    endorsement.getJobHunterUsername(),
+                    endorsement.getDescription(),
                     endorsement.getDate()));
             }
 
@@ -52,7 +50,7 @@ public class ViewEndorsementsController {
             endorsementsTextArea.setText("Failed to load endorsements: " + e.getMessage());
         }
     }
-   
+
 
     private void setupButtonHandlers() {
         profileBtn.setOnAction(e -> handleProfile());
@@ -63,23 +61,23 @@ public class ViewEndorsementsController {
     }
 
     private void handleProfile() {
-        navigateTo("EmployerDashboard.fxml");
+        navigateTo("userInterface/EmployerDashboard.fxml");
     }
 
     private void handleManageVacancies() {
-    	navigateTo("EmployerDashboard.fxml");
+    	navigateTo("userInterface/EmployerDashboard.fxml");
     }
 
     private void handleViewCompanies() {
-    	navigateTo("EmployerDashboard.fxml");
+    	navigateTo("userInterface/EmployerDashboard.fxml");
     }
 
     private void handleLogout() {
-    	navigateTo("EmployerDashboard.fxml");;
+    	navigateTo("userInterface/EmployerDashboard.fxml");
     }
 
     private void handleBack() {
-    	navigateTo("EmployerDashboard.fxml"); // Replace with the actual previous scene's FXML
+    	navigateTo("userInterface/EmployerDashboard.fxml"); // Replace with the actual previous scene's FXML
     }
 
     private void navigateTo(String fxml) {

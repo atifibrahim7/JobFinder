@@ -1,14 +1,11 @@
 package application;
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
-import java.sql.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class ResumeBuilderController {
 
@@ -33,7 +30,7 @@ public class ResumeBuilderController {
         String education = educationField.getText();
         String experience = experienceField.getText();
         String skills = skillsField.getText();
-        
+
         // Call backend to save data (example)
         Resume r = new Resume(education,experience,skills);
         Controller.Current_JH.attach_resume(r);
@@ -45,7 +42,7 @@ public class ResumeBuilderController {
 
     private void redirectToProfilePage() {
     	  try {
-              FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/account1.fxml"));
+              FXMLLoader loader = new FXMLLoader(getClass().getResource("userInterface/account1.fxml"));
               HBox root = loader.load();  // Load the FXML
 
               Scene scene = new Scene(root);
