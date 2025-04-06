@@ -1,6 +1,5 @@
-UML DIAGRAM : 
+[Visit JobFinder UML Diagram](https://atifibrahim7.github.io/JobFinder/)
 
-https://atifibrahim7.github.io/JobFinder/
 
 
 Important links:
